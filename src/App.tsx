@@ -8,6 +8,11 @@ import NotFound from "./pages/NotFound";
  import AcademyPage from "./pages/AcademyPage";
  import InsertionPage from "./pages/InsertionPage";
  import ProjectsPage from "./pages/ProjectsPage";
+ import GalleryPage from "./pages/GalleryPage";
+ import TestimonialsPage from "./pages/TestimonialsPage";
+ import EventsPage from "./pages/EventsPage";
+ import BlogPage from "./pages/BlogPage";
+ import "@/lib/i18n";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +27,10 @@ const App = () => (
            <Route path="/academy" element={<AcademyPage />} />
            <Route path="/insertion" element={<InsertionPage />} />
            <Route path="/projets" element={<ProjectsPage />} />
+            <Route path="/galerie" element={<GalleryPage />} />
+            <Route path="/temoignages" element={<TestimonialsPage />} />
+            <Route path="/evenements" element={<EventsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

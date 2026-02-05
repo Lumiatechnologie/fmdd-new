@@ -1,29 +1,42 @@
  import { useState, useEffect } from "react";
+ import { useTranslation } from "react-i18next";
  import { Link } from "react-router-dom";
  import { motion, AnimatePresence } from "framer-motion";
- import { Menu, X, ChevronDown, Phone, Mail, GraduationCap, Briefcase, Rocket } from "lucide-react";
+ import { Menu, X, ChevronDown, Phone, Mail, GraduationCap, Briefcase, Rocket, Image, Quote, CalendarDays, Newspaper } from "lucide-react";
  import { Button } from "@/components/ui/button";
- 
- const navLinks = [
-   { label: "Accueil", href: "/" },
-   {
-     label: "Nos Solutions",
-     href: "#solutions",
-     children: [
-       { label: "FMDD Academy", href: "/academy", icon: GraduationCap, description: "Formations certifiantes au Maroc" },
-       { label: "Insertion Pro", href: "/insertion", icon: Briefcase, description: "Emploi et recrutement" },
-       { label: "Entrepreneuriat", href: "/projets", icon: Rocket, description: "Création d'entreprise" },
-     ],
-   },
-   { label: "Qui sommes-nous", href: "/about" },
-   { label: "Partenaires", href: "/partenaires" },
-   { label: "Nous contacter", href: "/contact" },
- ];
+ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  
  export function Header() {
+   const { t, i18n } = useTranslation();
    const [isScrolled, setIsScrolled] = useState(false);
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
    const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+ 
+   const navLinks = [
+     { label: t('nav.home'), href: "/" },
+     {
+       label: t('nav.solutions'),
+       href: "#solutions",
+       children: [
+         { label: t('nav.academy'), href: "/academy", icon: GraduationCap, description: t('nav.academyDesc') },
+         { label: t('nav.insertion'), href: "/insertion", icon: Briefcase, description: t('nav.insertionDesc') },
+         { label: t('nav.entrepreneurship'), href: "/projets", icon: Rocket, description: t('nav.entrepreneurshipDesc') },
+       ],
+     },
+     {
+       label: i18n.language === 'ar' ? 'المحتوى' : i18n.language === 'en' ? 'Content' : 'Contenu',
+       href: "#content",
+       children: [
+         { label: t('nav.gallery'), href: "/galerie", icon: Image, description: i18n.language === 'ar' ? 'صور وفيديوهات' : i18n.language === 'en' ? 'Photos & Videos' : 'Photos et vidéos' },
+         { label: t('nav.testimonials'), href: "/temoignages", icon: Quote, description: i18n.language === 'ar' ? 'قصص النجاح' : i18n.language === 'en' ? 'Success stories' : 'Histoires de réussite' },
+         { label: t('nav.events'), href: "/evenements", icon: CalendarDays, description: i18n.language === 'ar' ? 'فعالياتنا' : i18n.language === 'en' ? 'Our events' : 'Nos événements' },
+         { label: t('nav.blog'), href: "/blog", icon: Newspaper, description: i18n.language === 'ar' ? 'أخبار ومقالات' : i18n.language === 'en' ? 'News & Articles' : 'Actualités et articles' },
+       ],
+     },
+     { label: t('nav.about'), href: "/about" },
+     { label: t('nav.partners'), href: "/partenaires" },
+     { label: t('nav.contact'), href: "/contact" },
+   ];
  
    useEffect(() => {
      const handleScroll = () => {
@@ -148,6 +161,7 @@
  
            {/* CTA Buttons */}
            <div className="hidden lg:flex items-center gap-3">
+             <LanguageSwitcher isScrolled={isScrolled} />
              <Button
                variant="ghost"
                className={`font-medium ${
@@ -157,10 +171,10 @@
                }`}
                aria-label="Se connecter à mon espace FMDD"
              >
-               Connexion
+               {t('nav.login')}
              </Button>
-             <Button variant="accent" size="lg" aria-label="S'inscrire sur la plateforme FMDD">
-               S'inscrire
+             <Button variant="accent" size="lg">
+               {t('nav.register')}
              </Button>
            </div>
  
@@ -222,12 +236,11 @@
                  </div>
                ))}
                <div className="pt-4 border-t border-border flex flex-col gap-2">
-                 <Button variant="outline" className="w-full">
-                   Connexion
-                 </Button>
-                 <Button variant="accent" className="w-full">
-                   Rejoindre FMDD
-                 </Button>
+                 <div className="flex justify-center mb-2">
+                   <LanguageSwitcher variant="default" isScrolled={true} />
+                 </div>
+                 <Button variant="outline" className="w-full">{t('nav.login')}</Button>
+                 <Button variant="accent" className="w-full">{t('nav.joinFmdd')}</Button>
                </div>
              </nav>
            </motion.div>

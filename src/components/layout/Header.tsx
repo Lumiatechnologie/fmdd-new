@@ -1,7 +1,7 @@
  import { useState, useEffect } from "react";
  import { Link } from "react-router-dom";
  import { motion, AnimatePresence } from "framer-motion";
- import { Menu, X, ChevronDown } from "lucide-react";
+ import { Menu, X, ChevronDown, Phone, Mail, GraduationCap, Briefcase, Rocket } from "lucide-react";
  import { Button } from "@/components/ui/button";
  
  const navLinks = [
@@ -9,15 +9,15 @@
    {
      label: "Nos Solutions",
      href: "#solutions",
-     submenu: [
-       { label: "FMDD Academy", href: "/academy" },
-       { label: "Insertion Pro", href: "/insertion" },
-       { label: "Lancer un Projet", href: "/projets" },
+     children: [
+       { label: "FMDD Academy", href: "/academy", icon: GraduationCap, description: "Formations certifiantes au Maroc" },
+       { label: "Insertion Pro", href: "/insertion", icon: Briefcase, description: "Emploi et recrutement" },
+       { label: "Entrepreneuriat", href: "/projets", icon: Rocket, description: "Création d'entreprise" },
      ],
    },
-   { label: "À propos", href: "/about" },
+   { label: "Qui sommes-nous", href: "/about" },
    { label: "Partenaires", href: "/partenaires" },
-   { label: "Contact", href: "/contact" },
+   { label: "Nous contacter", href: "/contact" },
  ];
  
  export function Header() {
@@ -40,11 +40,33 @@
            ? "bg-card/95 backdrop-blur-md shadow-md py-3"
            : "bg-transparent py-5"
        }`}
+       role="banner"
      >
+       {/* Top Bar - visible only when not scrolled */}
+       {!isScrolled && (
+         <div className="hidden lg:block bg-primary/20 backdrop-blur-sm">
+           <div className="container mx-auto px-4 lg:px-8 py-2 flex items-center justify-between text-sm">
+             <div className="flex items-center gap-6">
+               <a href="tel:+212520000000" className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors">
+                 <Phone className="w-4 h-4" aria-hidden="true" />
+                 <span>+212 5 20 00 00 00</span>
+               </a>
+               <a href="mailto:contact@fmdd.ma" className="flex items-center gap-2 text-primary-foreground/80 hover:text-accent transition-colors">
+                 <Mail className="w-4 h-4" aria-hidden="true" />
+                 <span>contact@fmdd.ma</span>
+               </a>
+             </div>
+             <div className="flex items-center gap-4 text-primary-foreground/80">
+               <span>🇲🇦 Forum Marocain pour le Développement Durable</span>
+             </div>
+           </div>
+         </div>
+       )}
+       
        <div className="container mx-auto px-4 lg:px-8">
-         <div className="flex items-center justify-between">
+         <div className="flex items-center justify-between" role="navigation" aria-label="Navigation principale">
            {/* Logo */}
-           <Link to="/" className="flex items-center gap-3 group">
+           <Link to="/" className="flex items-center gap-3 group" aria-label="FMDD - Accueil">
              <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow transition-transform group-hover:scale-105">
                <span className="text-primary-foreground font-display font-bold text-lg">F</span>
              </div>
@@ -59,13 +81,14 @@
            </Link>
  
            {/* Desktop Navigation */}
-           <nav className="hidden lg:flex items-center gap-1">
+           <nav className="hidden lg:flex items-center gap-1" role="menubar">
              {navLinks.map((link) => (
                <div
                  key={link.label}
                  className="relative"
-                 onMouseEnter={() => link.submenu && setActiveSubmenu(link.label)}
+                 onMouseEnter={() => link.children && setActiveSubmenu(link.label)}
                  onMouseLeave={() => setActiveSubmenu(null)}
+                 role="none"
                >
                  <Link
                    to={link.href}
@@ -74,29 +97,45 @@
                        ? "text-foreground hover:bg-muted"
                        : "text-primary-foreground/90 hover:text-primary-foreground hover:bg-primary-foreground/10"
                    }`}
+                   role="menuitem"
+                   aria-haspopup={link.children ? "true" : undefined}
+                   aria-expanded={link.children ? activeSubmenu === link.label : undefined}
                  >
                    {link.label}
-                   {link.submenu && <ChevronDown className="w-4 h-4" />}
+                   {link.children && <ChevronDown className="w-4 h-4" aria-hidden="true" />}
                  </Link>
  
                  {/* Submenu */}
                  <AnimatePresence>
-                   {link.submenu && activeSubmenu === link.label && (
+                   {link.children && activeSubmenu === link.label && (
                      <motion.div
                        initial={{ opacity: 0, y: 10 }}
                        animate={{ opacity: 1, y: 0 }}
                        exit={{ opacity: 0, y: 10 }}
                        transition={{ duration: 0.2 }}
                        className="absolute top-full left-0 pt-2"
+                       role="menu"
+                       aria-label={`Sous-menu ${link.label}`}
                      >
-                       <div className="bg-card rounded-xl shadow-lg border border-border p-2 min-w-[200px]">
-                         {link.submenu.map((sublink) => (
+                       <div className="bg-card rounded-xl shadow-lg border border-border p-2 min-w-[280px]">
+                         {link.children.map((sublink) => (
                            <Link
                              key={sublink.label}
                              to={sublink.href}
-                             className="block px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                             className="flex items-start gap-3 px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-muted transition-colors"
+                             role="menuitem"
                            >
-                             {sublink.label}
+                             {sublink.icon && (
+                               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                 <sublink.icon className="w-5 h-5 text-primary" aria-hidden="true" />
+                               </div>
+                             )}
+                             <div>
+                               <div className="font-medium">{sublink.label}</div>
+                               {sublink.description && (
+                                 <div className="text-xs text-muted-foreground mt-0.5">{sublink.description}</div>
+                               )}
+                             </div>
                            </Link>
                          ))}
                        </div>
@@ -116,11 +155,12 @@
                    ? "text-foreground hover:bg-muted"
                    : "text-primary-foreground hover:bg-primary-foreground/10"
                }`}
+               aria-label="Se connecter à mon espace FMDD"
              >
                Connexion
              </Button>
-             <Button variant="accent" size="lg">
-               Rejoindre FMDD
+             <Button variant="accent" size="lg" aria-label="S'inscrire sur la plateforme FMDD">
+               S'inscrire
              </Button>
            </div>
  
@@ -132,8 +172,10 @@
                  ? "text-foreground hover:bg-muted"
                  : "text-primary-foreground hover:bg-primary-foreground/10"
              }`}
+             aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+             aria-expanded={isMobileMenuOpen}
            >
-             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+             {isMobileMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
            </button>
          </div>
        </div>
@@ -147,26 +189,31 @@
              exit={{ opacity: 0, height: 0 }}
              transition={{ duration: 0.3 }}
              className="lg:hidden bg-card border-t border-border"
+             role="menu"
+             aria-label="Menu mobile"
            >
              <nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
                {navLinks.map((link) => (
-                 <div key={link.label}>
+                 <div key={link.label} role="none">
                    <Link
                      to={link.href}
-                     onClick={() => !link.submenu && setIsMobileMenuOpen(false)}
+                     onClick={() => !link.children && setIsMobileMenuOpen(false)}
                      className="block px-4 py-3 rounded-lg font-medium text-foreground hover:bg-muted transition-colors"
+                     role="menuitem"
                    >
                      {link.label}
                    </Link>
-                   {link.submenu && (
+                   {link.children && (
                      <div className="pl-4">
-                       {link.submenu.map((sublink) => (
+                       {link.children.map((sublink) => (
                          <Link
                            key={sublink.label}
                            to={sublink.href}
                            onClick={() => setIsMobileMenuOpen(false)}
-                           className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                           className="flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                           role="menuitem"
                          >
+                           {sublink.icon && <sublink.icon className="w-4 h-4 text-primary" aria-hidden="true" />}
                            {sublink.label}
                          </Link>
                        ))}

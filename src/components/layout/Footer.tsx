@@ -3,13 +3,13 @@
  
  const footerLinks = {
    solutions: [
-     { label: "FMDD Academy", href: "/academy" },
-     { label: "Insertion Pro", href: "/insertion" },
-     { label: "Lancer un Projet", href: "/projets" },
+     { label: "FMDD Academy", href: "/academy", description: "Formations certifiantes" },
+     { label: "Insertion Pro", href: "/insertion", description: "Emploi et recrutement" },
+     { label: "Entrepreneuriat", href: "/projets", description: "Création d'entreprise" },
      { label: "Témoignages", href: "/temoignages" },
    ],
    about: [
-     { label: "À propos du FMDD", href: "/about" },
+     { label: "Qui sommes-nous", href: "/about" },
      { label: "Notre équipe", href: "/equipe" },
      { label: "Partenaires", href: "/partenaires" },
      { label: "Presse", href: "/presse" },
@@ -18,7 +18,7 @@
      { label: "Centre d'aide", href: "/aide" },
      { label: "Blog", href: "/blog" },
      { label: "FAQ", href: "/faq" },
-     { label: "Contact", href: "/contact" },
+     { label: "Nous contacter", href: "/contact" },
    ],
    legal: [
      { label: "Mentions légales", href: "/mentions-legales" },
@@ -28,27 +28,27 @@
  };
  
  const socialLinks = [
-   { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-   { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-   { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-   { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-   { icon: Youtube, href: "https://youtube.com", label: "YouTube" },
+   { icon: Facebook, href: "https://facebook.com/FMDD.Maroc", label: "Facebook FMDD" },
+   { icon: Twitter, href: "https://twitter.com/FMDD_Maroc", label: "Twitter FMDD" },
+   { icon: Linkedin, href: "https://linkedin.com/company/fmdd-maroc", label: "LinkedIn FMDD" },
+   { icon: Instagram, href: "https://instagram.com/fmdd_maroc", label: "Instagram FMDD" },
+   { icon: Youtube, href: "https://youtube.com/@FMDDMaroc", label: "YouTube FMDD" },
  ];
  
  export function Footer() {
    return (
-     <footer className="bg-sidebar text-sidebar-foreground">
+     <footer className="bg-sidebar text-sidebar-foreground" role="contentinfo" itemScope itemType="https://schema.org/Organization">
        {/* Main Footer */}
        <div className="container mx-auto px-4 lg:px-8 py-16">
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
            {/* Brand Column */}
            <div className="lg:col-span-2">
-             <Link to="/" className="flex items-center gap-3 mb-6">
-               <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center">
+             <Link to="/" className="flex items-center gap-3 mb-6" aria-label="FMDD - Accueil">
+               <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center" aria-hidden="true">
                  <span className="text-primary-foreground font-display font-bold text-xl">F</span>
                </div>
                <div className="flex flex-col">
-                 <span className="font-display font-bold text-xl leading-tight text-sidebar-foreground">
+                 <span className="font-display font-bold text-xl leading-tight text-sidebar-foreground" itemProp="name">
                    FMDD
                  </span>
                  <span className="text-sm leading-tight text-sidebar-foreground/70">
@@ -56,35 +56,40 @@
                  </span>
                </div>
              </Link>
-             <p className="text-sidebar-foreground/70 mb-6 max-w-sm">
-               Plateforme digitale unissant jeunes, écoles, recruteurs et formateurs pour construire un avenir durable au Maroc.
+             <p className="text-sidebar-foreground/70 mb-6 max-w-sm" itemProp="description">
+               Le FMDD accompagne les jeunes marocains vers la réussite professionnelle : 
+               formations certifiantes, insertion dans l'emploi et accompagnement entrepreneurial.
              </p>
              
              {/* Contact Info */}
-             <div className="space-y-3">
+             <address className="space-y-3 not-italic" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                <a
                  href="mailto:contact@fmdd.ma"
                  className="flex items-center gap-3 text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
+                 itemProp="email"
                >
-                 <Mail className="w-5 h-5" />
+                 <Mail className="w-5 h-5" aria-hidden="true" />
                  <span>contact@fmdd.ma</span>
                </a>
                <a
-                 href="tel:+212522000000"
+                 href="tel:+212520000000"
                  className="flex items-center gap-3 text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
+                 itemProp="telephone"
                >
-                 <Phone className="w-5 h-5" />
-                 <span>+212 522 00 00 00</span>
+                 <Phone className="w-5 h-5" aria-hidden="true" />
+                 <span>+212 5 20 00 00 00</span>
                </a>
                <div className="flex items-start gap-3 text-sidebar-foreground/70">
-                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                 <span>Casablanca, Maroc</span>
+                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                 <span>
+                   <span itemProp="addressLocality">Rabat</span>, <span itemProp="addressCountry">Maroc</span>
+                 </span>
                </div>
-             </div>
+             </address>
            </div>
  
            {/* Solutions Column */}
-           <div>
+           <nav aria-label="Solutions FMDD">
              <h4 className="font-display font-semibold text-sidebar-foreground mb-4">
                Solutions
              </h4>
@@ -100,10 +105,10 @@
                  </li>
                ))}
              </ul>
-           </div>
+           </nav>
  
            {/* About Column */}
-           <div>
+           <nav aria-label="À propos du FMDD">
              <h4 className="font-display font-semibold text-sidebar-foreground mb-4">
                À propos
              </h4>
@@ -119,10 +124,10 @@
                  </li>
                ))}
              </ul>
-           </div>
+           </nav>
  
            {/* Resources Column */}
-           <div>
+           <nav aria-label="Ressources FMDD">
              <h4 className="font-display font-semibold text-sidebar-foreground mb-4">
                Ressources
              </h4>
@@ -138,7 +143,7 @@
                  </li>
                ))}
              </ul>
-           </div>
+           </nav>
          </div>
        </div>
  
@@ -148,9 +153,9 @@
            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
              <div className="flex items-center gap-6">
                <p className="text-sm text-sidebar-foreground/60">
-                 © {new Date().getFullYear()} FMDD. Tous droits réservés.
+                 © {new Date().getFullYear()} Forum Marocain pour le Développement Durable. Tous droits réservés.
                </p>
-               <div className="hidden md:flex items-center gap-4">
+               <nav className="hidden md:flex items-center gap-4" aria-label="Liens légaux">
                  {footerLinks.legal.map((link) => (
                    <Link
                      key={link.label}
@@ -160,11 +165,11 @@
                      {link.label}
                    </Link>
                  ))}
-               </div>
+               </nav>
              </div>
  
              {/* Social Links */}
-             <div className="flex items-center gap-3">
+             <div className="flex items-center gap-3" role="list" aria-label="Réseaux sociaux FMDD">
                {socialLinks.map((social) => (
                  <a
                    key={social.label}
@@ -173,8 +178,9 @@
                    rel="noopener noreferrer"
                    aria-label={social.label}
                    className="w-10 h-10 rounded-lg bg-sidebar-accent flex items-center justify-center text-sidebar-foreground/70 hover:text-sidebar-primary hover:bg-sidebar-accent/80 transition-colors"
+                   role="listitem"
                  >
-                   <social.icon className="w-5 h-5" />
+                   <social.icon className="w-5 h-5" aria-hidden="true" />
                  </a>
                ))}
              </div>

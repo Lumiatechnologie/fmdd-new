@@ -4,14 +4,19 @@
  import heroImage from "@/assets/hero-collaboration.jpg";
  
  const stats = [
-   { icon: Users, value: "15K+", label: "Jeunes inscrits" },
-   { icon: GraduationCap, value: "200+", label: "Formations" },
-   { icon: Briefcase, value: "500+", label: "Offres d'emploi" },
+   { icon: Users, value: "15 000+", label: "Jeunes accompagnés" },
+   { icon: GraduationCap, value: "200+", label: "Formations certifiantes" },
+   { icon: Briefcase, value: "87%", label: "Taux d'insertion" },
  ];
  
  export function HeroSection() {
    return (
-     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-hero">
+     <section 
+       className="relative min-h-screen flex items-center overflow-hidden bg-gradient-hero"
+       aria-label="Accueil - Forum Marocain pour le Développement Durable"
+       itemScope 
+       itemType="https://schema.org/Organization"
+     >
        {/* Animated Background Elements */}
        <div className="absolute inset-0 overflow-hidden">
          <div className="absolute top-20 left-10 w-72 h-72 bg-secondary/20 rounded-full blur-3xl animate-float" />
@@ -40,56 +45,61 @@
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.2 }}
                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 mb-8"
+               role="status"
              >
-               <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-               <span className="text-sm font-medium text-primary-foreground">
-                 Plateforme officielle du FMDD
+               <span className="w-2 h-2 rounded-full bg-success animate-pulse" aria-hidden="true" />
+               <span className="text-sm font-medium text-primary-foreground" itemProp="name">
+                 Forum Marocain pour le Développement Durable
                </span>
              </motion.div>
  
              {/* Headline */}
-             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6">
-               Construisez votre{" "}
+             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6" itemProp="slogan">
+               Ensemble pour un{" "}
                <span className="relative">
-                 <span className="relative z-10 text-accent">avenir</span>
+                 <span className="relative z-10 text-accent">Maroc durable</span>
                  <motion.span
                    initial={{ width: 0 }}
                    animate={{ width: "100%" }}
                    transition={{ delay: 0.8, duration: 0.6 }}
                    className="absolute bottom-2 left-0 h-3 bg-accent/30 rounded-full -z-0"
+                   aria-hidden="true"
                  />
-               </span>{" "}
-               durable
+               </span>
+               <br className="hidden sm:block" />
+               et prospère
              </h1>
  
-             <p className="text-lg sm:text-xl text-primary-foreground/80 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-               Formation, emploi et entrepreneuriat au service de la jeunesse marocaine. 
-               Rejoignez la plateforme qui transforme les talents en réussites.
+             <p className="text-lg sm:text-xl text-primary-foreground/80 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed" itemProp="description">
+               Le FMDD accompagne les jeunes marocains vers l'excellence : 
+               formations certifiantes, insertion professionnelle et soutien 
+               à l'entrepreneuriat pour bâtir l'avenir du Maroc.
              </p>
  
              {/* CTAs */}
              <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-               <Button variant="accent" size="xl" className="w-full sm:w-auto group">
-                 Commencer maintenant
+               <Button variant="accent" size="xl" className="w-full sm:w-auto group" aria-label="S'inscrire gratuitement sur le FMDD">
+                 Rejoindre le FMDD
                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                </Button>
-               <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group">
-                 <Play className="w-5 h-5" />
-                 Voir la vidéo
+               <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group" aria-label="Découvrir le Forum Marocain pour le Développement Durable">
+                 <Play className="w-5 h-5" aria-hidden="true" />
+                 Découvrir le FMDD
                </Button>
              </div>
  
              {/* Stats */}
-             <motion.div
+             <motion.aside
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.6 }}
                className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-primary-foreground/10"
+               aria-label="Chiffres clés du FMDD"
              >
                {stats.map((stat, index) => (
                  <div key={index} className="text-center lg:text-left">
                    <div className="flex items-center justify-center lg:justify-start gap-2 mb-1">
-                     <stat.icon className="w-5 h-5 text-accent" />
+                     <stat.icon className="w-5 h-5 text-accent" aria-hidden="true" />
                      <span className="text-2xl sm:text-3xl font-display font-bold text-primary-foreground">
                        {stat.value}
                      </span>
@@ -97,7 +107,7 @@
                    <span className="text-sm text-primary-foreground/60">{stat.label}</span>
                  </div>
                ))}
-             </motion.div>
+             </motion.aside>
            </motion.div>
  
            {/* Right Content - Decorative */}
@@ -118,9 +128,11 @@
                    className="absolute inset-8 rounded-3xl overflow-hidden shadow-2xl"
                  >
                    <img 
-                     src={heroImage} 
-                     alt="Jeunes professionnels marocains collaborant" 
+                       src={heroImage}
+                       alt="Jeunes professionnels marocains collaborant dans un cadre professionnel - FMDD"
                      className="w-full h-full object-cover"
+                       loading="eager"
+                       itemProp="image"
                    />
                    <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
                  </motion.div>
@@ -190,6 +202,7 @@
          animate={{ opacity: 1 }}
          transition={{ delay: 1.5 }}
          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+           aria-hidden="true"
        >
          <motion.div
            animate={{ y: [0, 8, 0] }}

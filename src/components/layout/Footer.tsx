@@ -1,6 +1,6 @@
  import { Link } from "react-router-dom";
  import { Facebook, Twitter, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
- 
+ import LOGO from "../../assets/LOGO.jpg";
  const footerLinks = {
    solutions: [
      { label: "FMDD Academy", href: "/academy", description: "Formations certifiantes" },
@@ -28,11 +28,9 @@
  };
  
  const socialLinks = [
-   { icon: Facebook, href: "https://facebook.com/FMDD.Maroc", label: "Facebook FMDD" },
-   { icon: Twitter, href: "https://twitter.com/FMDD_Maroc", label: "Twitter FMDD" },
-   { icon: Linkedin, href: "https://linkedin.com/company/fmdd-maroc", label: "LinkedIn FMDD" },
-   { icon: Instagram, href: "https://instagram.com/fmdd_maroc", label: "Instagram FMDD" },
-   { icon: Youtube, href: "https://youtube.com/@FMDDMaroc", label: "YouTube FMDD" },
+   { icon: Facebook, href: "https://web.facebook.com/p/Forum-Marocain-Pour-Le-D%C3%A9veloppement-Durable-61573191698612/?_rdc=1&_rdr#", label: "Facebook FMDD" },
+   { icon: Linkedin, href: "https://www.linkedin.com/company/forum-marocain-pour-le-d%C3%A9veloppement-durable/posts/?feedView=all", label: "LinkedIn FMDD" },
+   { icon: Instagram, href: "https://www.instagram.com/f.m.d.d/", label: "Instagram FMDD" }
  ];
  
  export function Footer() {
@@ -45,7 +43,7 @@
            <div className="lg:col-span-2">
              <Link to="/" className="flex items-center gap-3 mb-6" aria-label="FMDD - Accueil">
                <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center" aria-hidden="true">
-                 <span className="text-primary-foreground font-display font-bold text-xl">F</span>
+                 <span className="text-primary-foreground font-display font-bold text-xl"><img className="rounded-full"src={LOGO} alt="" /></span>
                </div>
                <div className="flex flex-col">
                  <span className="font-display font-bold text-xl leading-tight text-sidebar-foreground" itemProp="name">
@@ -72,17 +70,17 @@
                  <span>contact@fmdd.ma</span>
                </a>
                <a
-                 href="tel:+212520000000"
+                 href="tel:+212 645 466 188"
                  className="flex items-center gap-3 text-sidebar-foreground/70 hover:text-sidebar-primary transition-colors"
                  itemProp="telephone"
                >
                  <Phone className="w-5 h-5" aria-hidden="true" />
-                 <span>+212 5 20 00 00 00</span>
+                 <span>+212 645 466 188</span>
                </a>
                <div className="flex items-start gap-3 text-sidebar-foreground/70">
                  <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true" />
                  <span>
-                   <span itemProp="addressLocality">Rabat</span>, <span itemProp="addressCountry">Maroc</span>
+                   <span itemProp="addressLocality">Casablanca</span>, <span itemProp="addressCountry">Maroc</span>
                  </span>
                </div>
              </address>

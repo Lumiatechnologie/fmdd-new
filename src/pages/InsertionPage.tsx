@@ -1,268 +1,308 @@
- import { Header } from "@/components/layout/Header";
- import { Footer } from "@/components/layout/Footer";
- import { motion } from "framer-motion";
- import { Briefcase, MapPin, Clock, Building, Search, Filter, TrendingUp } from "lucide-react";
- import { Button } from "@/components/ui/button";
- import { Input } from "@/components/ui/input";
- import { useEffect } from "react";
- 
- const featuredJobs = [
-   {
-     id: 1,
-     title: "Développeur Full Stack",
-     company: "TechMaroc Solutions",
-     location: "Casablanca",
-     type: "CDI",
-     salary: "15-25K MAD",
-     posted: "Il y a 2 jours",
-     logo: "TM",
-     skills: ["React", "Node.js", "TypeScript"],
-   },
-   {
-     id: 2,
-     title: "Responsable Marketing Digital",
-     company: "Agence Digitale Rabat",
-     location: "Rabat",
-     type: "CDI",
-     salary: "12-18K MAD",
-     posted: "Il y a 3 jours",
-     logo: "AD",
-     skills: ["SEO", "Google Ads", "Analytics"],
-   },
-   {
-     id: 3,
-     title: "Chef de Projet RSE",
-     company: "EcoMaroc Consulting",
-     location: "Marrakech",
-     type: "CDI",
-     salary: "20-30K MAD",
-     posted: "Il y a 1 jour",
-     logo: "EC",
-     skills: ["RSE", "Management", "Sustainability"],
-   },
-   {
-     id: 4,
-     title: "Data Analyst Junior",
-     company: "FinTech Maroc",
-     location: "Casablanca",
-     type: "Stage",
-     salary: "6-8K MAD",
-     posted: "Aujourd'hui",
-     logo: "FM",
-     skills: ["Python", "SQL", "Power BI"],
-   },
- ];
- 
- const stats = [
-   { value: "500+", label: "Offres d'emploi au Maroc" },
-   { value: "150+", label: "Entreprises partenaires" },
-   { value: "87%", label: "Taux d'insertion" },
-   { value: "3 sem", label: "Délai moyen d'embauche" },
- ];
- 
- export default function InsertionPage() {
-   // SEO: Update document title
-   useEffect(() => {
-     document.title = "Insertion Pro - Emploi et Recrutement au Maroc | FMDD";
-   }, []);
- 
-   return (
-     <div className="min-h-screen bg-background">
-       <Header />
-       
-       <main itemScope itemType="https://schema.org/WebPage">
-         {/* Hero Section */}
-         <section className="pt-32 pb-20 bg-gradient-hero" aria-labelledby="insertion-hero-title">
-           <div className="container mx-auto px-4 lg:px-8">
-             <motion.div
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               className="max-w-4xl mx-auto text-center"
-             >
-               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 mb-6">
-                 <Briefcase className="w-4 h-4 text-accent" aria-hidden="true" />
-                 <span className="text-sm font-medium text-primary-foreground">
-                   Insertion Pro
-                 </span>
-               </span>
-               
-               <h1 id="insertion-hero-title" className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-primary-foreground mb-6">
-                 Trouvez votre emploi{" "}
-                 <span className="text-accent">au Maroc</span>
-               </h1>
-               
-               <p className="text-lg sm:text-xl text-primary-foreground/80 mb-10 max-w-2xl mx-auto" itemProp="description">
-                 Accédez aux meilleures offres d'emploi au Maroc. Notre plateforme met en relation 
-                 les jeunes talents avec les entreprises qui recrutent dans tout le Royaume.
-               </p>
- 
-               {/* Search Bar */}
-               <div className="max-w-2xl mx-auto bg-card rounded-2xl p-3 shadow-lg" role="search" aria-label="Rechercher une offre d'emploi">
-                 <div className="flex flex-col sm:flex-row gap-3">
-                   <div className="relative flex-1">
-                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
-                     <Input 
-                       placeholder="Poste, compétences..."
-                       aria-label="Rechercher par poste ou compétence"
-                       className="pl-12 h-12 bg-muted border-0"
-                     />
-                   </div>
-                   <div className="relative flex-1">
-                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
-                     <Input 
-                       placeholder="Ville au Maroc"
-                       aria-label="Rechercher par ville"
-                       className="pl-12 h-12 bg-muted border-0"
-                     />
-                   </div>
-                   <Button variant="accent" size="lg" className="h-12" aria-label="Lancer la recherche d'emploi">
-                     Rechercher
-                   </Button>
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { motion } from "framer-motion";
+import { Briefcase, MapPin, Clock, Building, Search, Filter, TrendingUp, ChevronRight, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
+
+export default function InsertionPage() {
+  const { t, i18n } = useTranslation();
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchParams, setSearchParams] = useState({
+    search: "",
+    location: "",
+  });
+  const [filters, setFilters] = useState({
+    type: "all",
+    category: "all",
+    isRemote: "all"
+  });
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+
+  const isRTL = i18n.language === 'ar';
+
+  useEffect(() => {
+    document.title = "Insertion Pro - Emploi et Recrutement au Maroc | FMDD";
+    fetchJobs();
+    fetchRecommendations();
+  }, [searchParams, filters]);
+
+  const fetchJobs = async () => {
+    setLoading(true);
+    try {
+      const response = await api.get("/jobs", { 
+        params: { 
+          search: searchParams.search,
+          location: searchParams.location,
+          type: filters.type === "all" ? undefined : filters.type,
+          category: filters.category === "all" ? undefined : filters.category,
+          isRemote: filters.isRemote === "all" ? undefined : filters.isRemote === "true"
+        } 
+      });
+      setJobs(response.data);
+    } catch (error) {
+      console.error("Failed to fetch jobs", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchRecommendations = async () => {
+    if (!localStorage.getItem('token')) return;
+    try {
+      const res = await api.get("/jobs/recommended");
+      setRecommendations(res.data);
+    } catch (e) { /* ignore */ }
+  };
+
+  const handleApply = async (jobId: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!localStorage.getItem('token')) {
+      toast.error("Veuillez vous connecter pour postuler");
+      return;
+    }
+    try {
+      await api.post(`/jobs/${jobId}/apply`);
+      toast.success("Candidature envoyée avec succès !");
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || "Erreur lors de la candidature");
+    }
+  };
+
+  return (
+    <div className={`min-h-screen bg-background ${isRTL ? "text-right" : "text-left"}`} dir={isRTL ? "rtl" : "ltr"}>
+      <Header />
+      
+      <main itemScope itemType="https://schema.org/WebPage">
+        {/* Hero Section */}
+        <section className="pt-32 pb-20 bg-gradient-hero">
+          <div className="container mx-auto px-4 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 mb-6 font-bold shadow-soft animate-pulse">
+                <Briefcase className="w-4 h-4 text-accent" />
+                <span className="text-sm font-medium text-primary-foreground">
+                   Le futur de l'emploi durable au Maroc
+                </span>
+              </span>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-primary-foreground mb-8 leading-tight">
+                Découvrez votre <span className="text-accent">prochain défi</span>
+              </h1>
+              
+              {/* Search Bar */}
+              <div className="max-w-4xl mx-auto mt-12 bg-white/95 backdrop-blur-md rounded-[2.5rem] p-4 shadow-2xl border border-white/20">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="relative flex-1">
+                    <Search className={`absolute ${isRTL ? "right-6" : "left-6"} top-1/2 -translate-y-1/2 text-primary w-5 h-5`} />
+                    <Input 
+                      placeholder="Recrutement, Stage PFE..."
+                      className={`h-16 border-none bg-muted/30 rounded-2xl text-lg font-medium ${isRTL ? "pr-14" : "pl-14"}`}
+                      value={searchParams.search}
+                      onChange={(e) => setSearchParams({...searchParams, search: e.target.value})}
+                    />
+                  </div>
+                  <div className="relative flex-1">
+                    <MapPin className={`absolute ${isRTL ? "right-6" : "left-6"} top-1/2 -translate-y-1/2 text-primary w-5 h-5`} />
+                    <Input 
+                      placeholder="Ville (Marrakech, Rabat...)"
+                      className={`h-16 border-none bg-muted/30 rounded-2xl text-lg font-medium ${isRTL ? "pr-14" : "pl-14"}`}
+                      value={searchParams.location}
+                      onChange={(e) => setSearchParams({...searchParams, location: e.target.value})}
+                    />
+                  </div>
+                  <Button variant="accent" size="lg" className="h-16 px-12 rounded-2xl text-lg font-bold shadow-glow" onClick={() => fetchJobs()}>
+                    Chercher
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Personalized Matching Section */}
+        {recommendations.length > 0 && (
+           <section className="py-12 bg-muted/30 border-y border-border">
+              <div className="container mx-auto px-4 lg:px-8">
+                 <div className="flex items-center gap-4 mb-8">
+                    <div className="w-12 h-12 rounded-2xl bg-accent text-white flex items-center justify-center">
+                       <TrendingUp className="w-6 h-6" />
+                    </div>
+                    <div>
+                       <h2 className="text-2xl font-bold">Matching Intelligent (IA)</h2>
+                       <p className="text-muted-foreground font-medium">Offres basées sur vos compétences</p>
+                    </div>
                  </div>
-               </div>
-             </motion.div>
-           </div>
-         </section>
- 
-         {/* Stats */}
-         <section className="py-10 bg-muted/30 border-b border-border" aria-label="Statistiques du marché de l'emploi FMDD">
-           <div className="container mx-auto px-4 lg:px-8">
-             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-               {stats.map((stat, index) => (
-                 <motion.div
-                   key={index}
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: index * 0.1 }}
-                   className="text-center"
-                 >
-                   <div className="text-2xl sm:text-3xl font-display font-bold text-primary mb-1">
-                     {stat.value}
-                   </div>
-                   <div className="text-sm text-muted-foreground">{stat.label}</div>
-                 </motion.div>
-               ))}
-             </div>
-           </div>
-         </section>
- 
-         {/* Job Listings */}
-         <section className="py-20" aria-labelledby="job-listings-title">
-           <div className="container mx-auto px-4 lg:px-8">
-             <div className="flex items-center justify-between mb-10">
-               <div>
-                 <h2 id="job-listings-title" className="text-3xl font-display font-bold text-foreground mb-2">
-                   Offres d'emploi récentes au Maroc
-                 </h2>
-                 <p className="text-muted-foreground">Découvrez les dernières opportunités professionnelles</p>
-               </div>
-               <Button variant="outline" className="gap-2" aria-label="Filtrer les offres d'emploi">
-                 <Filter className="w-4 h-4" aria-hidden="true" />
-                 Filtrer
-               </Button>
-             </div>
- 
-             <div className="space-y-4" role="list" aria-label="Liste des offres d'emploi">
-               {featuredJobs.map((job, index) => (
-                 <motion.div
-                   key={job.id}
-                   initial={{ opacity: 0, x: -20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   transition={{ delay: index * 0.1 }}
-                   className="bg-card rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-border hover:border-primary/20 cursor-pointer group"
-                   role="listitem"
-                   itemScope
-                   itemType="https://schema.org/JobPosting"
-                 >
-                   <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                     {/* Logo */}
-                     <div className="w-14 h-14 rounded-xl bg-gradient-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                       <span className="text-lg font-bold text-primary-foreground">{job.logo}</span>
-                     </div>
- 
-                     {/* Info */}
-                     <div className="flex-1">
-                       <div className="flex flex-wrap items-center gap-2 mb-2">
-                         <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors" itemProp="title">
-                           {job.title}
-                         </h3>
-                         {job.posted === "Aujourd'hui" && (
-                           <span className="px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-medium">
-                             Nouveau
-                           </span>
-                         )}
-                       </div>
-                       
-                       <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
-                         <span className="flex items-center gap-1" itemProp="hiringOrganization" itemScope itemType="https://schema.org/Organization">
-                           <Building className="w-4 h-4" aria-hidden="true" />
-                           <span itemProp="name">{job.company}</span>
-                         </span>
-                         <span className="flex items-center gap-1" itemProp="jobLocation" itemScope itemType="https://schema.org/Place">
-                           <MapPin className="w-4 h-4" aria-hidden="true" />
-                           <span itemProp="name">{job.location}, Maroc</span>
-                         </span>
-                         <span className="flex items-center gap-1">
-                           <Clock className="w-4 h-4" aria-hidden="true" />
-                           {job.posted}
-                         </span>
-                       </div>
- 
-                       <div className="flex flex-wrap gap-2" aria-label="Compétences requises">
-                         {job.skills.map((skill) => (
-                           <span 
-                             key={skill}
-                             className="px-3 py-1 rounded-full bg-muted text-sm text-muted-foreground"
+                 
+                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {recommendations.map(job => (
+                      <Link to={`/insertion/${job.id}`} key={job.id}>
+                        <motion.div
+                          whileHover={{ y: -5 }}
+                          className="bg-card p-6 rounded-3xl border border-primary/20 shadow-sm shadow-primary/5 group"
+                        >
+                           <div className="flex justify-between items-start mb-4">
+                              <span className="px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold uppercase rounded-full tracking-wider">
+                                 {job.score > 1 ? "Top Match" : "Recommandé"}
+                              </span>
+                              <span className="text-xs text-muted-foreground">{job.type}</span>
+                           </div>
+                           <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{job.title}</h4>
+                           <p className="text-sm text-muted-foreground mb-4 line-clamp-1">{job.company}</p>
+                           <div className="flex items-center gap-2 text-xs font-bold text-primary">
+                              Postuler <ChevronRight className="w-3 h-3" />
+                           </div>
+                        </motion.div>
+                      </Link>
+                    ))}
+                 </div>
+              </div>
+           </section>
+        )}
+
+        {/* Job Listings with filters */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-16">
+              <h2 className="text-4xl font-display font-bold text-foreground">
+                Opportunités <span className="text-primary italic">récentes</span>
+              </h2>
+              
+              {/* Filter Pills */}
+              <div className="flex flex-wrap gap-4">
+                 <select 
+                    className="h-11 px-4 rounded-xl border border-border bg-card text-sm font-medium focus:ring-2 ring-primary outline-none"
+                    value={filters.type}
+                    onChange={(e) => setFilters({...filters, type: e.target.value})}
+                  >
+                    <option value="all">Tous types</option>
+                    <option value="CDI">CDI</option>
+                    <option value="Stage">Stage</option>
+                    <option value="Freelance">Freelance</option>
+                 </select>
+
+                 <select 
+                    className="h-11 px-4 rounded-xl border border-border bg-card text-sm font-medium focus:ring-2 ring-primary outline-none"
+                    value={filters.category}
+                    onChange={(e) => setFilters({...filters, category: e.target.value})}
+                  >
+                    <option value="all">Tous domaines</option>
+                    <option value="Environnement">Environnement</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Business">Business</option>
+                 </select>
+
+                 <Button 
+                    variant={filters.isRemote === "true" ? "accent" : "outline"} 
+                    className="rounded-xl font-bold h-11"
+                    onClick={() => setFilters({...filters, isRemote: filters.isRemote === "true" ? "all" : "true"})}
+                  >
+                    Télétravail
+                 </Button>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {loading ? (
+                [1, 2, 3].map(i => (
+                  <div key={i} className="bg-muted animate-pulse rounded-[2rem] h-40" />
+                ))
+              ) : jobs.length > 0 ? (
+                jobs.map((job, index) => (
+                  <Link to={`/insertion/${job.id}`} key={job.id}>
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="bg-card rounded-[2rem] p-8 shadow-soft hover:shadow-glow transition-all border border-border group relative overflow-hidden"
+                    >
+                      <div className="flex flex-col lg:flex-row lg:items-center gap-8 relative z-10">
+                        <div className="w-20 h-20 rounded-2xl bg-muted flex items-center justify-center text-primary font-bold text-3xl shrink-0 group-hover:scale-105 transition-transform">
+                          {job.company?.[0]}
+                        </div>
+                      
+                        <div className="flex-1 space-y-3">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                              {job.title}
+                            </h3>
+                            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                              {job.type}
+                            </span>
+                            {job.isRemote && (
+                              <span className="px-3 py-1 rounded-full bg-success/10 text-success text-xs font-bold flex items-center gap-1">
+                                <Globe className="w-3 h-3" />
+                                Remote
+                              </span>
+                            )}
+                          </div>
+                          
+                          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground font-medium">
+                            <span className="flex items-center gap-2">
+                              <Building className="w-4 h-4 text-primary" />
+                              {job.company}
+                            </span>
+                            <span className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-primary" />
+                              {job.location}
+                            </span>
+                            <span className="flex items-center gap-2">
+                              <Clock className="w-4 h-4 text-primary" />
+                              Il y a {Math.floor(Math.random() * 5) + 1}j
+                            </span>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {job.skills?.split(',').map((skill: string) => (
+                              <span key={skill} className="px-3 py-1.5 rounded-xl bg-muted/50 text-xs font-medium text-muted-foreground border border-border">
+                                {skill.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                      <div className="flex flex-col sm:items-end justify-between self-stretch gap-6">
+                        <span className="text-3xl font-bold text-foreground tracking-tight">{job.salary || "A discuter"}</span>
+                        <div className="flex gap-3">
+                           <Button 
+                              variant="outline"
+                              className="rounded-xl px-6 h-12 font-bold group-hover:bg-primary group-hover:text-white transition-all"
                            >
-                             {skill}
-                           </span>
-                         ))}
-                       </div>
-                     </div>
- 
-                     {/* Right */}
-                     <div className="flex flex-col items-end gap-2">
-                       <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium" itemProp="employmentType">
-                         {job.type}
-                       </span>
-                       <span className="text-lg font-semibold text-foreground" itemProp="baseSalary">{job.salary}</span>
-                       <Button variant="default" size="sm" className="mt-2" aria-label={`Postuler à l'offre ${job.title}`}>
-                         Postuler
-                       </Button>
-                     </div>
-                   </div>
-                 </motion.div>
-               ))}
-             </div>
- 
-             <div className="text-center mt-10">
-               <Button variant="outline" size="lg" aria-label="Voir toutes les offres d'emploi disponibles au Maroc">
-                 Voir toutes les offres
-               </Button>
-             </div>
-           </div>
-         </section>
- 
-         {/* CTA */}
-         <section className="py-20 bg-muted/30" aria-labelledby="recruiter-cta-title">
-           <div className="container mx-auto px-4 lg:px-8">
-             <div className="bg-gradient-primary rounded-2xl p-8 lg:p-12 text-center">
-               <TrendingUp className="w-12 h-12 text-accent mx-auto mb-6" aria-hidden="true" />
-               <h2 id="recruiter-cta-title" className="text-3xl font-display font-bold text-primary-foreground mb-4">
-                 Vous êtes recruteur ?
-               </h2>
-               <p className="text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-                 Accédez à notre vivier de talents marocains qualifiés. Publiez vos offres et trouvez les meilleurs profils.
-               </p>
-               <Button variant="accent" size="xl" aria-label="Publier une offre d'emploi sur la plateforme FMDD">
-                 Publier une offre
-               </Button>
-             </div>
-           </div>
-         </section>
-       </main>
- 
-       <Footer />
-     </div>
-   );
- }
+                             Voir l'offre
+                           </Button>
+                           <Button 
+                              onClick={(e) => handleApply(job.id, e)}
+                              className="w-full sm:w-auto px-10 h-12 transition-all hover:scale-105 rounded-xl font-bold shadow-glow"
+                           >
+                              Postuler
+                           </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Link>
+                ))
+              ) : (
+                <div className="text-center py-20 text-muted-foreground">
+                  Aucune offre trouvée pour vos critères.
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

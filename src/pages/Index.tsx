@@ -2,6 +2,7 @@
  import { Footer } from "@/components/layout/Footer";
  import { HeroSection } from "@/components/home/HeroSection";
  import { SolutionsSection } from "@/components/home/SolutionsSection";
+ import { MissionSection } from "@/components/home/MissionSection";
  import { StatsSection } from "@/components/home/StatsSection";
  import { TestimonialsSection } from "@/components/home/TestimonialsSection";
  import { PartnersSection } from "@/components/home/PartnersSection";
@@ -14,6 +15,7 @@
        <main>
          <HeroSection />
          <SolutionsSection />
+         <MissionSection />
          <StatsSection />
          <TestimonialsSection />
          <PartnersSection />

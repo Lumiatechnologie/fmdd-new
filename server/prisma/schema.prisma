@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // ADMIN, USER, MENTOR, RECRUITER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+  
+  // Relations
+  progressions CourseProgression[]
+  applications Application[]
+  projects     Project[]
+  mentorings   Mentoring[] @relation("MentorUser")
+  menteeings   Mentoring[] @relation("MenteeUser")
+  certificates Certificate[]
+  badges       UserBadge[]
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  firstName   String?
+  lastName    String?
+  bio         String?
+  avatar      String?
+  skills      String? // JSON or comma-separated
+  preferences String? // JSON
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Formation {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  image       String?
+  duration    String?
+  level       String?
+  category    String?
+  isPaid      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  modules      Module[]
+  progressions CourseProgression[]
+  certificates Certificate[]
+}
+
+model Module {
+  id          String    @id @default(uuid())
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  title       String
+  content     String?   // Video URL or text
+  order       Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  quizzes     Quiz[]
+}
+
+model Quiz {
+  id              String         @id @default(uuid())
+  moduleId        String?
+  module          Module?        @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  interviewPrepId String?
+  interviewPrep   InterviewPrep? @relation(fields: [interviewPrepId], references: [id], onDelete: Cascade)
+  title           String
+  questions       Question[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model Question {
+  id        String   @id @default(uuid())
+  quizId    String
+  quiz      Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  text      String
+  options   Option[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Option {
+  id         String   @id @default(uuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  text       String
+  isCorrect  Boolean  @default(false)
+}
+
+model Certificate {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id])
+  issueDate   DateTime  @default(now())
+  verifyUrl   String    @unique
+}
+
+model Badge {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  icon        String
+  users       UserBadge[]
+}
+
+model UserBadge {
+  id      String @id @default(uuid())
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  badgeId String
+  badge   Badge  @relation(fields: [badgeId], references: [id])
+  earnedAt DateTime @default(now())
+}
+
+
+model CourseProgression {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id])
+  progress    Int       @default(0) // Percentage
+  isCompleted Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, formationId])
+}
+
+model JobOffer {
+  id          String   @id @default(uuid())
+  title       String
+  company     String
+  location    String
+  type        String // CDI, Stage, Freelance
+  category    String? // Business, Tech, Agri, etc.
+  duration    String? // 6 months, Permanent
+  salary      String?
+  description String
+  skills      String? // Comma-separated
+  isRemote    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  applications Application[]
+}
+
+model Application {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  jobId       String
+  jobOffer    JobOffer @relation(fields: [jobId], references: [id])
+  status      String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model InterviewPrep {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  category    String   // CV, Interview, Soft Skills
+  videoUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  quizzes     Quiz[]
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  description String
+  status      String   @default("IDEATION") // IDEATION, MVP, GROWTH
+  diagnostic  String?  // JSON response from diagnostic quiz
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Mentoring {
+  id        String   @id @default(uuid())
+  mentorId  String
+  mentor    User     @relation("MentorUser", fields: [mentorId], references: [id])
+  menteeId  String
+  mentee    User     @relation("MenteeUser", fields: [menteeId], references: [id])
+  status    String   @default("REQUESTED") // REQUESTED, ACTIVE, COMPLETED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

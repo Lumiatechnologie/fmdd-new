@@ -22,6 +22,8 @@ class InscriptionController extends Controller
             'prenom' => 'required|string|max:191',
             'email' => 'required|email|unique:inscriptions,email',
             'telephone' => 'nullable|string|max:20',
+            'domaine_formation' => 'required|string',
+            'niveau_etudes' => 'required|string',
             'message' => 'nullable|string',
             'dossier_name' => 'required|string',
             'cv' => 'required|file|mimes:pdf,doc,docx,txt|max:5120',
@@ -32,7 +34,7 @@ class InscriptionController extends Controller
 
         try {
             $inscription = new Inscription($request->only([
-                'nom', 'prenom', 'email', 'telephone', 'message', 'event_id'
+                'nom', 'prenom', 'email', 'telephone', 'domaine_formation', 'niveau_etudes', 'message', 'event_id'
             ]));
 
             $inscription->qr_entry_token = Str::random(40);

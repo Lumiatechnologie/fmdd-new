@@ -14,6 +14,8 @@ class Inscription extends Model
         'prenom',
         'email',
         'telephone',
+        'domaine_formation',
+        'niveau_etudes',
         'message',
         'cv_filename',
         'cv_path',

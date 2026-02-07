@@ -28,7 +28,7 @@ export default function InsertionPage() {
   const isRTL = i18n.language === 'ar';
 
   useEffect(() => {
-    document.title = "Insertion Pro - Emploi et Recrutement au Maroc | FMDD";
+    document.title = `${t('pages.insertion.title')} | FMDD`;
     fetchJobs();
     fetchRecommendations();
   }, [searchParams, filters]);
@@ -65,14 +65,14 @@ export default function InsertionPage() {
     e.preventDefault();
     e.stopPropagation();
     if (!localStorage.getItem('token')) {
-      toast.error("Veuillez vous connecter pour postuler");
+      toast.error(t('pages.insertion.loginToApply'));
       return;
     }
     try {
       await api.post(`/jobs/${jobId}/apply`);
-      toast.success("Candidature envoyée avec succès !");
+      toast.success(t('pages.insertion.applySuccess'));
     } catch (error: any) {
-      toast.error(error.response?.data?.error || "Erreur lors de la candidature");
+      toast.error(error.response?.data?.error || t('pages.insertion.applyError'));
     }
   };
 
@@ -82,7 +82,7 @@ export default function InsertionPage() {
       
       <main itemScope itemType="https://schema.org/WebPage">
         {/* Hero Section */}
-        <section className="pt-32 pb-20 bg-gradient-hero">
+        <section className="pt-32 pb-20 bg-gradient-hero text-primary-foreground">
           <div className="container mx-auto px-4 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -91,22 +91,22 @@ export default function InsertionPage() {
             >
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 mb-6 font-bold shadow-soft animate-pulse">
                 <Briefcase className="w-4 h-4 text-accent" />
-                <span className="text-sm font-medium text-primary-foreground">
-                   Le futur de l'emploi durable au Maroc
+                <span className="text-sm font-medium">
+                   {t('pages.insertion.heroSubtitle')}
                 </span>
               </span>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-primary-foreground mb-8 leading-tight">
-                Découvrez votre <span className="text-accent">prochain défi</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold mb-8 leading-tight">
+                {t('pages.insertion.heroTitle')}
               </h1>
               
               {/* Search Bar */}
-              <div className="max-w-4xl mx-auto mt-12 bg-white/95 backdrop-blur-md rounded-[2.5rem] p-4 shadow-2xl border border-white/20">
+              <div className="max-w-4xl mx-auto mt-12 bg-white/95 backdrop-blur-md rounded-[2.5rem] p-4 shadow-2xl border border-white/20 text-foreground">
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="relative flex-1">
                     <Search className={`absolute ${isRTL ? "right-6" : "left-6"} top-1/2 -translate-y-1/2 text-primary w-5 h-5`} />
                     <Input 
-                      placeholder="Recrutement, Stage PFE..."
+                      placeholder={t('pages.insertion.searchPlaceholder')}
                       className={`h-16 border-none bg-muted/30 rounded-2xl text-lg font-medium ${isRTL ? "pr-14" : "pl-14"}`}
                       value={searchParams.search}
                       onChange={(e) => setSearchParams({...searchParams, search: e.target.value})}
@@ -115,14 +115,14 @@ export default function InsertionPage() {
                   <div className="relative flex-1">
                     <MapPin className={`absolute ${isRTL ? "right-6" : "left-6"} top-1/2 -translate-y-1/2 text-primary w-5 h-5`} />
                     <Input 
-                      placeholder="Ville (Marrakech, Rabat...)"
+                      placeholder={t('pages.insertion.locationPlaceholder')}
                       className={`h-16 border-none bg-muted/30 rounded-2xl text-lg font-medium ${isRTL ? "pr-14" : "pl-14"}`}
                       value={searchParams.location}
                       onChange={(e) => setSearchParams({...searchParams, location: e.target.value})}
                     />
                   </div>
                   <Button variant="accent" size="lg" className="h-16 px-12 rounded-2xl text-lg font-bold shadow-glow" onClick={() => fetchJobs()}>
-                    Chercher
+                    {t('pages.insertion.searchAction')}
                   </Button>
                 </div>
               </div>
@@ -139,8 +139,8 @@ export default function InsertionPage() {
                        <TrendingUp className="w-6 h-6" />
                     </div>
                     <div>
-                       <h2 className="text-2xl font-bold">Matching Intelligent (IA)</h2>
-                       <p className="text-muted-foreground font-medium">Offres basées sur vos compétences</p>
+                       <h2 className="text-2xl font-bold">{t('pages.insertion.matchingTitle')}</h2>
+                       <p className="text-muted-foreground font-medium">{t('pages.insertion.matchingSubtitle')}</p>
                     </div>
                  </div>
                  
@@ -153,14 +153,14 @@ export default function InsertionPage() {
                         >
                            <div className="flex justify-between items-start mb-4">
                               <span className="px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold uppercase rounded-full tracking-wider">
-                                 {job.score > 1 ? "Top Match" : "Recommandé"}
+                                 {job.score > 1 ? t('pages.insertion.topMatch') : t('pages.insertion.recommended')}
                               </span>
                               <span className="text-xs text-muted-foreground">{job.type}</span>
                            </div>
                            <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{job.title}</h4>
                            <p className="text-sm text-muted-foreground mb-4 line-clamp-1">{job.company}</p>
                            <div className="flex items-center gap-2 text-xs font-bold text-primary">
-                              Postuler <ChevronRight className="w-3 h-3" />
+                              {t('pages.insertion.applyAction')} <ChevronRight className={`w-3 h-3 ${isRTL ? 'rotate-180' : ''}`} />
                            </div>
                         </motion.div>
                       </Link>
@@ -175,7 +175,7 @@ export default function InsertionPage() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-16">
               <h2 className="text-4xl font-display font-bold text-foreground">
-                Opportunités <span className="text-primary italic">récentes</span>
+                {t('pages.insertion.recentOpportunities').split(' ')[0]} <span className="text-primary italic">{t('pages.insertion.recentOpportunities').split(' ')[1]}</span>
               </h2>
               
               {/* Filter Pills */}
@@ -185,7 +185,7 @@ export default function InsertionPage() {
                     value={filters.type}
                     onChange={(e) => setFilters({...filters, type: e.target.value})}
                   >
-                    <option value="all">Tous types</option>
+                    <option value="all">{t('pages.insertion.allTypes')}</option>
                     <option value="CDI">CDI</option>
                     <option value="Stage">Stage</option>
                     <option value="Freelance">Freelance</option>
@@ -196,7 +196,7 @@ export default function InsertionPage() {
                     value={filters.category}
                     onChange={(e) => setFilters({...filters, category: e.target.value})}
                   >
-                    <option value="all">Tous domaines</option>
+                    <option value="all">{t('pages.insertion.allDomains')}</option>
                     <option value="Environnement">Environnement</option>
                     <option value="Tech">Tech</option>
                     <option value="Business">Business</option>
@@ -207,7 +207,7 @@ export default function InsertionPage() {
                     className="rounded-xl font-bold h-11"
                     onClick={() => setFilters({...filters, isRemote: filters.isRemote === "true" ? "all" : "true"})}
                   >
-                    Télétravail
+                    {t('pages.insertion.remotePill')}
                  </Button>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default function InsertionPage() {
                 jobs.map((job, index) => (
                   <Link to={`/insertion/${job.id}`} key={job.id}>
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       className="bg-card rounded-[2rem] p-8 shadow-soft hover:shadow-glow transition-all border border-border group relative overflow-hidden"
@@ -242,7 +242,7 @@ export default function InsertionPage() {
                             {job.isRemote && (
                               <span className="px-3 py-1 rounded-full bg-success/10 text-success text-xs font-bold flex items-center gap-1">
                                 <Globe className="w-3 h-3" />
-                                Remote
+                                {t('pages.insertion.remoteLabel')}
                               </span>
                             )}
                           </div>
@@ -258,7 +258,7 @@ export default function InsertionPage() {
                             </span>
                             <span className="flex items-center gap-2">
                               <Clock className="w-4 h-4 text-primary" />
-                              Il y a {Math.floor(Math.random() * 5) + 1}j
+                              {t('pages.insertion.daysAgo', { count: Math.floor(Math.random() * 5) + 1 })}
                             </span>
                           </div>
                           
@@ -271,20 +271,20 @@ export default function InsertionPage() {
                           </div>
                         </div>
 
-                      <div className="flex flex-col sm:items-end justify-between self-stretch gap-6">
-                        <span className="text-3xl font-bold text-foreground tracking-tight">{job.salary || "A discuter"}</span>
+                      <div className={`flex flex-col ${isRTL ? 'sm:items-start' : 'sm:items-end'} justify-between self-stretch gap-6`}>
+                        <span className="text-3xl font-bold text-foreground tracking-tight">{job.salary || t('pages.insertion.salaryDiscuss')}</span>
                         <div className="flex gap-3">
                            <Button 
                               variant="outline"
                               className="rounded-xl px-6 h-12 font-bold group-hover:bg-primary group-hover:text-white transition-all"
                            >
-                             Voir l'offre
+                             {t('pages.insertion.viewOffer')}
                            </Button>
                            <Button 
                               onClick={(e) => handleApply(job.id, e)}
                               className="w-full sm:w-auto px-10 h-12 transition-all hover:scale-105 rounded-xl font-bold shadow-glow"
                            >
-                              Postuler
+                              {t('pages.insertion.applyAction')}
                            </Button>
                         </div>
                       </div>
@@ -294,7 +294,7 @@ export default function InsertionPage() {
                 ))
               ) : (
                 <div className="text-center py-20 text-muted-foreground">
-                  Aucune offre trouvée pour vos critères.
+                  {t('pages.insertion.noOffers')}
                 </div>
               )}
             </div>

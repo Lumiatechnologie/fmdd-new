@@ -29,13 +29,13 @@ export function Header() {
       ],
     },
     {
-      label: i18n.language === 'ar' ? 'المحتوى' : i18n.language === 'en' ? 'Content' : 'Contenu',
+      label: t('nav.content'),
       href: "#content",
       children: [
-        { label: t('nav.gallery'), href: "/galerie", icon: Image, description: i18n.language === 'ar' ? 'صور وفيديوهات' : i18n.language === 'en' ? 'Photos & Videos' : 'Photos et vidéos' },
-        { label: t('nav.testimonials'), href: "/temoignages", icon: Quote, description: i18n.language === 'ar' ? 'قصص النجاح' : i18n.language === 'en' ? 'Success stories' : 'Histoires de réussite' },
-        { label: t('nav.events'), href: "/evenements", icon: CalendarDays, description: i18n.language === 'ar' ? 'فعالياتنا' : i18n.language === 'en' ? 'Our events' : 'Nos événements' },
-        { label: t('nav.blog'), href: "/blog", icon: Newspaper, description: i18n.language === 'ar' ? 'أخبار ومقالات' : i18n.language === 'en' ? 'News & Articles' : 'Actualités et articles' },
+        { label: t('nav.gallery'), href: "/galerie", icon: Image, description: t('nav.galleryDesc') },
+        { label: t('nav.testimonials'), href: "/temoignages", icon: Quote, description: t('nav.testimonialsDesc') },
+        { label: t('nav.events'), href: "/evenements", icon: CalendarDays, description: t('nav.eventsDesc') },
+        { label: t('nav.blog'), href: "/blog", icon: Newspaper, description: t('nav.blogDesc') },
       ],
     },
     { label: t('nav.about'), href: "/about" },
@@ -58,6 +58,7 @@ export function Header() {
           : "bg-white/95 backdrop-blur-md shadow-md py-3"
       }`}
       role="banner"
+      dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
     >
       {/* Top Bar - visible only when at the top of home page or any content page */}
       {(isTransparent || !isHomePage) && (
@@ -74,25 +75,25 @@ export function Header() {
               </a>
             </div>
             <div className={`flex items-center gap-4 transition-colors ${isTransparent ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
-              <span>🇲🇦 Forum Marocain pour le Développement Durable</span>
+              <span>🇲🇦 {t('hero.badge')}</span>
             </div>
           </div>
         </div>
       )}
       
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between" role="navigation" aria-label="Navigation principale">
+        <div className="flex items-center justify-between" role="navigation" aria-label={t('nav.title') || "Navigation principale"}>
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group" aria-label="FMDD - Accueil">
+          <Link to="/" className="flex items-center gap-3 group" aria-label={`FMDD - ${t('nav.home')}`}>
             <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow transition-transform group-hover:scale-105">
-              <span className="text-primary-foreground font-display font-bold text-lg rounded-full"><img className="rounded-full" src={LOGO} alt=""/></span>
+              <span className="text-primary-foreground font-display font-bold text-lg rounded-full"><img className="rounded-full" src={LOGO} alt="FMDD Logo"/></span>
             </div>
             <div className="flex flex-col">
               <span className={`font-display font-bold text-lg leading-tight transition-colors ${isTransparent ? 'text-primary-foreground' : 'text-foreground'}`}>
                 FMDD
               </span>
               <span className={`text-xs leading-tight transition-colors ${isTransparent ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>
-                Développement Durable
+                {t('nav.sustainableDev')}
               </span>
             </div>
           </Link>
@@ -119,7 +120,7 @@ export function Header() {
                   aria-expanded={link.children ? activeSubmenu === link.label : undefined}
                 >
                   {link.label}
-                  {link.children && <ChevronDown className="w-4 h-4" aria-hidden="true" />}
+                  {link.children && <ChevronDown className={`w-4 h-4 transition-transform ${activeSubmenu === link.label ? 'rotate-180' : ''}`} aria-hidden="true" />}
                 </Link>
 
                 {/* Submenu */}
@@ -130,9 +131,9 @@ export function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 pt-2"
+                      className={`absolute top-full pt-2 ${i18n.language === 'ar' ? 'right-0' : 'left-0'}`}
                       role="menu"
-                      aria-label={`Sous-menu ${link.label}`}
+                      aria-label={`${t('nav.submenu')} ${link.label}`}
                     >
                       <div className="bg-card rounded-xl shadow-lg border border-border p-2 min-w-[280px]">
                         {link.children.map((sublink) => (
@@ -147,7 +148,7 @@ export function Header() {
                                 <sublink.icon className="w-5 h-5 text-primary" aria-hidden="true" />
                               </div>
                             )}
-                            <div>
+                            <div className={i18n.language === 'ar' ? 'text-right' : 'text-left'}>
                               <div className="font-medium">{sublink.label}</div>
                               {sublink.description && (
                                 <div className="text-xs text-muted-foreground mt-0.5">{sublink.description}</div>
@@ -190,7 +191,7 @@ export function Header() {
                           : "text-foreground hover:bg-muted"
                       }`}
                     >
-                      Admin
+                      {t('nav.admin')}
                     </Button>
                   </Link>
                 )}
@@ -204,7 +205,7 @@ export function Header() {
                   }}
                   className={isTransparent ? "border-primary-foreground/50 text-primary-foreground bg-transparent hover:bg-primary-foreground/10" : ""}
                 >
-                  {t('nav.logout') || 'Logout'}
+                  {t('nav.logout')}
                 </Button>
               </>
             ) : (
@@ -217,7 +218,7 @@ export function Header() {
                         ? "text-primary-foreground hover:bg-primary-foreground/10"
                         : "text-foreground hover:bg-muted"
                     }`}
-                    aria-label="Se connecter à mon espace FMDD"
+                    aria-label={t('nav.login')}
                   >
                     {t('nav.login')}
                   </Button>

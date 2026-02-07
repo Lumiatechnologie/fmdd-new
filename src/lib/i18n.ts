@@ -13,17 +13,24 @@ const resources = {
         insertionDesc: "Emploi et recrutement",
         entrepreneurship: "Entrepreneuriat",
         entrepreneurshipDesc: "Création d'entreprise",
+        content: "Contenu",
+        gallery: "Galerie",
+        galleryDesc: "Photos et vidéos",
+        testimonials: "Témoignages",
+        testimonialsDesc: "Histoires de réussite",
+        events: "Événements",
+        eventsDesc: "Nos événements",
+        blog: "Blog",
+        blogDesc: "Actualités et articles",
         about: "Qui sommes-nous",
         partners: "Partenaires",
         contact: "Nous contacter",
-        gallery: "Galerie",
-        testimonials: "Témoignages",
-        events: "Événements",
-        blog: "Blog & Actualités",
         login: "Connexion",
         register: "S'inscrire",
         logout: "Déconnexion",
-        joinFmdd: "Rejoindre FMDD"
+        joinFmdd: "Rejoindre FMDD",
+        admin: "Admin",
+        sustainableDev: "Développement Durable"
       },
       hero: {
         badge: "Forum Marocain pour le Développement Durable",
@@ -200,7 +207,8 @@ const resources = {
         creatingAccount: "Création...",
         passwordPlaceholder: "Choisissez un mot de passe",
         confirmPasswordPlaceholder: "Confirmez le mot de passe",
-        orContinueWith: "Ou continuer avec"
+        orContinueWith: "Ou continuer avec",
+        passwordsDoNotMatch: "Les mots de passe ne correspondent pas"
       },
       common: {
         learnMore: "En savoir plus",
@@ -211,7 +219,15 @@ const resources = {
         search: "Rechercher",
         filter: "Filtrer",
         share: "Partager",
-        download: "Télécharger"
+        download: "Télécharger",
+        categories: {
+          career: "Emploi",
+          training: "Formation",
+          entrepreneurship: "Entrepreneuriat",
+          ceremony: "Cérémonie"
+        },
+        currency: "MAD",
+        event: "Événement"
       },
       pages: {
         dashboard: {
@@ -222,6 +238,134 @@ const resources = {
           appliedJobs: "Candidatures envoyées",
           mentoring: "Sessions de mentorat",
           projects: "Projets d'incubation"
+        },
+        events: {
+          title: "Événements",
+          subtitle: "Participez aux événements majeurs de l'écosystème FMDD",
+          upcoming: "À venir",
+          past: "Passés",
+          loading: "Chargement des événements...",
+          noUpcoming: "Aucun événement à venir.",
+          noPast: "Aucun événement passé.",
+          newsletterTitle: "Ne manquez aucun événement",
+          newsletterSub: "Inscrivez-vous à notre newsletter pour recevoir les alertes événements.",
+          registerNow: "S'inscrire",
+          ended: "Terminé",
+          free: "Gratuit",
+          attendees: "participants",
+          newsletterSubFull: "Inscrivez-vous à notre newsletter pour recevoir les alertes événements et invitations exclusives.",
+          newsletterEmailPlaceholder: "votre.email@exemple.com"
+        },
+        inscription: {
+          title: "Inscription",
+          successTitle: "Inscription Réussie",
+          successSub: "Veuillez conserver vos codes QR ci-dessous.",
+          formSub: "Remplissez le formulaire pour confirmer votre participation.",
+          firstName: "Prénom",
+          lastName: "Nom",
+          email: "Email",
+          phone: "Téléphone",
+          message: "Message (optionnel)",
+          cv: "Votre CV (PDF, DOCX)",
+          upload: "Cliquez pour uploader",
+          submit: "Envoyer ma demande",
+          qrAccess: "CODE ACCÈS (Entrée)",
+          qrCv: "CODE CV (Consultation)",
+          qrAccessDesc: "Présentez ce code lors de l'accueil.",
+          qrCvDesc: "Partagez ce code avec les recruteurs.",
+          print: "Imprimer",
+          new: "Nouvelle inscription",
+          validated: "Inscription validée !",
+          error: "Une erreur est survenue",
+          cvRequired: "Veuillez joindre votre CV"
+        },
+        insertion: {
+          title: "Insertion Pro",
+          heroSubtitle: "Le futur de l'emploi durable au Maroc",
+          heroTitle: "Découvrez votre prochain défi",
+          searchPlaceholder: "Recrutement, Stage PFE...",
+          locationPlaceholder: "Ville (Marrakech, Rabat...)",
+          searchAction: "Chercher",
+          matchingTitle: "Matching Intelligent (IA)",
+          matchingSubtitle: "Offres basées sur vos compétences",
+          topMatch: "Top Match",
+          recommended: "Recommandé",
+          recentOpportunities: "Opportunités récentes",
+          allTypes: "Tous types",
+          allDomains: "Tous domaines",
+          remotePill: "Télétravail",
+          remoteLabel: "Remote",
+          daysAgo: "Il y a {{count}}j",
+          salaryDiscuss: "A discuter",
+          viewOffer: "Voir l'offre",
+          applyAction: "Postuler",
+          loginToApply: "Veuillez vous connecter pour postuler",
+          applySuccess: "Candidature envoyée avec succès !",
+          applyError: "Erreur lors de la candidature",
+          noOffers: "Aucune offre trouvée pour vos critères."
+        },
+        gallery: {
+          title: "Galerie",
+          subtitle: "Découvrez les moments forts de la communauté FMDD en images et vidéos."
+        },
+        testimonials: {
+          title: "Témoignages",
+          subtitle: "Découvrez l'impact de nos programmes à travers les histoires de ceux qui les ont vécus."
+        },
+        blog: {
+          title: "Blog",
+          subtitle: "Actualités, guides et retours d'expérience sur l'écosystème FMDD.",
+          recentPosts: "Articles récents"
+        }
+      },
+      incubation: {
+        hero: {
+          badge: "Service d'Incubation",
+          title: "Transformez votre idée en startup à succès",
+          subtitle: "Accompagnement complet pour entrepreneurs au Maroc",
+          startDiagnostic: "Commencer le diagnostic",
+          explorePrograms: "Explorer les programmes"
+        },
+        stats: {
+          projectsIncubated: "Projets incubés",
+          mentors: "Mentors experts",
+          fundingSecured: "Financements obtenus"
+        },
+        programs: {
+          title: "Nos Programmes d'Incubation",
+          subtitle: "Choisissez le programme adapté à votre projet",
+          projects: "projets",
+          learnMore: "En savoir plus"
+        },
+        cta: {
+          title: "Prêt à lancer votre startup ?",
+          subtitle: "Rejoignez notre programme d'incubation et bénéficiez d'un accompagnement complet",
+          button: "Démarrer maintenant"
+        },
+        mentorship: {
+          title: "Nos Mentors Experts",
+          subtitle: "Bénéficiez de l'expérience de mentors qualifiés",
+          sessions: "sessions",
+          requestSession: "Demander une session",
+          requestSent: "Demande envoyée avec succès !",
+          requestFailed: "Échec de l'envoi de la demande",
+          allExpertise: "Toutes les expertises",
+          noMentors: "Aucun mentor trouvé"
+        },
+        funding: {
+          title: "Opportunités de Financement",
+          subtitle: "Accédez aux concours, subventions et investissements",
+          upcoming: "À venir",
+          all: "Tous",
+          allTypes: "Tous les types",
+          competition: "Concours",
+          grant: "Subvention",
+          investment: "Investissement",
+          deadline: "Date limite",
+          daysLeft: "jours restants",
+          requirements: "Conditions",
+          apply: "Postuler",
+          noEvents: "Aucun événement trouvé"
         }
       },
       footer: {
@@ -232,7 +376,22 @@ const resources = {
         newsletter: "Newsletter",
         newsletterText: "Inscrivez-vous pour recevoir nos actualités",
         subscribe: "S'abonner",
-        rights: "Tous droits réservés"
+        rights: "Tous droits réservés",
+        tagline: "Le FMDD accompagne les jeunes marocains vers la réussite professionnelle : formations certifiantes, insertion dans l'emploi et accompagnement entrepreneurial.",
+        about: "À propos",
+        resources: "Ressources",
+        legal: "Légal",
+        copyright: "© {{year}} Forum Marocain pour le Développement Durable. Tous droits réservés.",
+        whoAreWe: "Qui sommes-nous",
+        team: "Notre équipe",
+        partners: "Partenaires",
+        press: "Presse",
+        helpCenter: "Centre d'aide",
+        faq: "FAQ",
+        contactUs: "Nous contacter",
+        mentions: "Mentions légales",
+        privacy: "Politique de confidentialité",
+        cgu: "CGU"
       }
     }
   },
@@ -247,17 +406,24 @@ const resources = {
         insertionDesc: "التوظيف والتشغيل",
         entrepreneurship: "ريادة الأعمال",
         entrepreneurshipDesc: "إنشاء المقاولات",
+        content: "المحتوى",
+        gallery: "المعرض",
+        galleryDesc: "صور وفيديوهات",
+        testimonials: "شهادات",
+        testimonialsDesc: "قصص النجاح",
+        events: "فعاليات",
+        eventsDesc: "فعالياتنا",
+        blog: "المدونة",
+        blogDesc: "أخبار ومقالات",
         about: "من نحن",
         partners: "شركاؤنا",
         contact: "اتصل بنا",
-        gallery: "معرض الصور",
-        testimonials: "شهادات",
-        events: "الفعاليات",
-        blog: "المدونة والأخبار",
         login: "تسجيل الدخول",
         register: "التسجيل",
         logout: "تسجيل الخروج",
-        joinFmdd: "انضم إلى FMDD"
+        joinFmdd: "انضم إلى FMDD",
+        admin: "المدير",
+        sustainableDev: "التنمية المستدامة"
       },
       hero: {
         badge: "المنتدى المغربي للتنمية المستدامة",
@@ -434,7 +600,8 @@ const resources = {
         creatingAccount: "جاري إنشاء الحساب...",
         passwordPlaceholder: "اختر كلمة مرور",
         confirmPasswordPlaceholder: "تأكيد كلمة المرور",
-        orContinueWith: "أو المتابعة باستخدام"
+        orContinueWith: "أو المتابعة باستخدام",
+        passwordsDoNotMatch: "كلمات المرور غير متطابقة"
       },
       common: {
         learnMore: "اعرف المزيد",
@@ -445,7 +612,15 @@ const resources = {
         search: "بحث",
         filter: "تصفية",
         share: "مشاركة",
-        download: "تحميل"
+        download: "تحميل",
+        categories: {
+          career: "التوظيف",
+          training: "تكوين",
+          entrepreneurship: "ريادة الأعمال",
+          ceremony: "حفل"
+        },
+        currency: "درهم",
+        event: "فعالية"
       },
       pages: {
         dashboard: {
@@ -456,6 +631,84 @@ const resources = {
           appliedJobs: "طلبات مقدمة",
           mentoring: "جلسات التوجيه",
           projects: "مشاريع الاحتضان"
+        },
+        events: {
+          title: "الفعاليات",
+          subtitle: "شارك في الفعاليات الكبرى لمنظومة FMDD",
+          upcoming: "القادمة",
+          past: "السابقة",
+          loading: "جاري تحميل الفعاليات...",
+          noUpcoming: "لا توجد فعاليات قادمة.",
+          noPast: "لا توجد فعاليات سابقة.",
+          newsletterTitle: "لا تفوت أي حدث",
+          newsletterSub: "اشترك في نشرتنا الإخبارية لتلقي تنبيهات الفعاليات.",
+          registerNow: "سجل الآن",
+          ended: "انتهى",
+          free: "مجاني",
+          attendees: "مشارك",
+          newsletterSubFull: "اشترك في نشرتنا الإخبارية لتلقي تنبيهات الفعاليات والدعوات الحصرية.",
+          newsletterEmailPlaceholder: "بريدك.الإلكتروني@مثال.com"
+        },
+        inscription: {
+          title: "التسجيل",
+          successTitle: "تم التسجيل بنجاح",
+          successSub: "يرجى الاحتفاظ برموز QR الخاصة بك أدناه.",
+          formSub: "املأ الاستمارة لتأكيد مشاركتك.",
+          firstName: "الاسم الشخصي",
+          lastName: "الاسم العائلي",
+          email: "البريد الإلكتروني",
+          phone: "الهاتف",
+          message: "رسالة (اختياري)",
+          cv: "سيرتك الذاتية (PDF, DOCX)",
+          upload: "انقر للتحميل",
+          submit: "إرسال طلبي",
+          qrAccess: "رمز الدخول (الدخول)",
+          qrCv: "رمز السيرة الذاتية (للاطلاع)",
+          qrAccessDesc: "قدم هذا الرمز عند الاستقبال.",
+          qrCvDesc: "شارك هذا الرمز مع مسؤولي التوظيف.",
+          print: "طباعة",
+          new: "تسجيل جديد",
+          validated: "تم تأكيد التسجيل!",
+          error: "حدث خطأ ما",
+          cvRequired: "يرجى إرفاق سيرتك الذاتية"
+        },
+        insertion: {
+          title: "الإدراج المهني",
+          heroSubtitle: "مستقبل التوظيف المستدام في المغرب",
+          heroTitle: "اكتشف تحديك القادم",
+          searchPlaceholder: "توظيف، تدريب...",
+          locationPlaceholder: "المدينة (مراكش، الرباط...)",
+          searchAction: "بحث",
+          matchingTitle: "المطابقة الذكية (IA)",
+          matchingSubtitle: "عروض بناءً على مهاراتك",
+          topMatch: "أفضل مطابقة",
+          recommended: "موصى به",
+          recentOpportunities: "فرص حديثة",
+          allTypes: "جميع الأنواع",
+          allDomains: "جميع المجالات",
+          remotePill: "العمل عن بعد",
+          remoteLabel: "عن بعد",
+          daysAgo: "منذ {{count}} أيام",
+          salaryDiscuss: "للمناقشة",
+          viewOffer: "عرض العرض",
+          applyAction: "تقديم الطلب",
+          loginToApply: "يرجى تسجيل الدخول للتقديم",
+          applySuccess: "تم إرسال الطلب بنجاح!",
+          applyError: "خطأ أثناء تقديم الطلب",
+          noOffers: "لا توجد عروض مطابقة لمعاييرك."
+        },
+        gallery: {
+          title: "المعرض",
+          subtitle: "اكتشف أبرز لحظات مجتمع FMDD من خلال الصور والفيديوهات."
+        },
+        testimonials: {
+          title: "الشهادات",
+          subtitle: "اكتشف أثر برامجنا من خلال قصص أولئك الذين عاشوها."
+        },
+        blog: {
+          title: "المدونة",
+          subtitle: "أخبار، دلائل وتجارب حول منظومة FMDD.",
+          recentPosts: "المقالات الأخيرة"
         }
       },
       footer: {
@@ -466,7 +719,22 @@ const resources = {
         newsletter: "النشرة الإخبارية",
         newsletterText: "اشترك لتلقي أخبارنا",
         subscribe: "اشترك",
-        rights: "جميع الحقوق محفوظة"
+        rights: "جميع الحقوق محفوظة",
+        tagline: "يرافق المنتدى المغربي للتنمية المستدامة الشباب المغربي نحو النجاح المهني: تكوينات معتمدة، إدراج في الشغل ومواكبة مقاولاتية.",
+        about: "عن المنتدى",
+        resources: "الموارد",
+        legal: "قانوني",
+        copyright: "© {{year}} المنتدى المغربي للتنمية المستدامة. جميع الحقوق محفوظة.",
+        whoAreWe: "من نحن",
+        team: "فريقنا",
+        partners: "شركاؤنا",
+        press: "الصحافة",
+        helpCenter: "مركز المساعدة",
+        faq: "الأسئلة الشائعة",
+        contactUs: "اتصل بنا",
+        mentions: "إشعارات قانونية",
+        privacy: "سياسة الخصوصية",
+        cgu: "شروط الاستخدام"
       }
     }
   },
@@ -481,17 +749,24 @@ const resources = {
         insertionDesc: "Employment and recruitment",
         entrepreneurship: "Entrepreneurship",
         entrepreneurshipDesc: "Business creation",
+        content: "Content",
+        gallery: "Gallery",
+        galleryDesc: "Photos & videos",
+        testimonials: "Testimonials",
+        testimonialsDesc: "Success stories",
+        events: "Events",
+        eventsDesc: "Our events",
+        blog: "Blog",
+        blogDesc: "News & articles",
         about: "About Us",
         partners: "Partners",
         contact: "Contact Us",
-        gallery: "Gallery",
-        testimonials: "Testimonials",
-        events: "Events",
-        blog: "Blog & News",
         login: "Login",
         register: "Sign Up",
         logout: "Logout",
-        joinFmdd: "Join FMDD"
+        joinFmdd: "Join FMDD",
+        admin: "Admin",
+        sustainableDev: "Sustainable Development"
       },
       hero: {
         badge: "Moroccan Forum for Sustainable Development",
@@ -668,7 +943,8 @@ const resources = {
         creatingAccount: "Creating...",
         passwordPlaceholder: "Create a password",
         confirmPasswordPlaceholder: "Confirm password",
-        orContinueWith: "Or continue with"
+        orContinueWith: "Or continue with",
+        passwordsDoNotMatch: "Passwords do not match"
       },
       common: {
         learnMore: "Learn more",
@@ -679,7 +955,15 @@ const resources = {
         search: "Search",
         filter: "Filter",
         share: "Share",
-        download: "Download"
+        download: "Download",
+        categories: {
+          career: "Career",
+          training: "Training",
+          entrepreneurship: "Entrepreneurship",
+          ceremony: "Ceremony"
+        },
+        currency: "MAD",
+        event: "Event"
       },
       pages: {
         dashboard: {
@@ -690,6 +974,84 @@ const resources = {
           appliedJobs: "Job applications",
           mentoring: "Mentoring sessions",
           projects: "Incubation projects"
+        },
+        events: {
+          title: "Events",
+          subtitle: "Participate in major events of the FMDD ecosystem",
+          upcoming: "Upcoming",
+          past: "Past",
+          loading: "Loading events...",
+          noUpcoming: "No upcoming events.",
+          noPast: "No past events.",
+          newsletterTitle: "Don't Miss Any Event",
+          newsletterSub: "Subscribe to our newsletter to receive event alerts.",
+          registerNow: "Register",
+          ended: "Ended",
+          free: "Free",
+          attendees: "attendees",
+          newsletterSubFull: "Subscribe to our newsletter to receive event alerts and exclusive invitations.",
+          newsletterEmailPlaceholder: "your.email@example.com"
+        },
+        inscription: {
+          title: "Registration",
+          successTitle: "Registration Successful",
+          successSub: "Please keep your QR codes below.",
+          formSub: "Fill out the form to confirm your participation.",
+          firstName: "First Name",
+          lastName: "Last Name",
+          email: "Email",
+          phone: "Phone",
+          message: "Message (optional)",
+          cv: "Your CV (PDF, DOCX)",
+          upload: "Click to upload",
+          submit: "Send my request",
+          qrAccess: "ACCESS CODE (Entry)",
+          qrCv: "CV CODE (Consultation)",
+          qrAccessDesc: "Present this code at reception.",
+          qrCvDesc: "Share this code with recruiters.",
+          print: "Print",
+          new: "New Registration",
+          validated: "Registration validated!",
+          error: "An error occurred",
+          cvRequired: "Please attach your CV"
+        },
+        insertion: {
+          title: "Insertion Pro",
+          heroSubtitle: "The future of sustainable employment in Morocco",
+          heroTitle: "Discover your next challenge",
+          searchPlaceholder: "Recruitment, PFE Internship...",
+          locationPlaceholder: "City (Marrakech, Rabat...)",
+          searchAction: "Search",
+          matchingTitle: "Intelligent Matching (AI)",
+          matchingSubtitle: "Offers based on your skills",
+          topMatch: "Top Match",
+          recommended: "Recommended",
+          recentOpportunities: "Recent Opportunities",
+          allTypes: "All types",
+          allDomains: "All domains",
+          remotePill: "Remote Work",
+          remoteLabel: "Remote",
+          daysAgo: "{{count}}d ago",
+          salaryDiscuss: "To discuss",
+          viewOffer: "View offer",
+          applyAction: "Apply",
+          loginToApply: "Please login to apply",
+          applySuccess: "Application sent successfully!",
+          applyError: "Error during application",
+          noOffers: "No offers found for your criteria."
+        },
+        gallery: {
+          title: "Gallery",
+          subtitle: "Discover the highlights of the FMDD community through images and videos."
+        },
+        testimonials: {
+          title: "Testimonials",
+          subtitle: "Discover the impact of our programs through the stories of those who experienced them."
+        },
+        blog: {
+          title: "Blog",
+          subtitle: "News, guides, and experiences from the FMDD ecosystem.",
+          recentPosts: "Recent Posts"
         }
       },
       footer: {
@@ -700,7 +1062,22 @@ const resources = {
         newsletter: "Newsletter",
         newsletterText: "Subscribe to receive our news",
         subscribe: "Subscribe",
-        rights: "All rights reserved"
+        rights: "All rights reserved",
+        tagline: "FMDD accompanies young Moroccans towards professional success: certified training, job insertion, and entrepreneurial support.",
+        about: "About",
+        resources: "Resources",
+        legal: "Legal",
+        copyright: "© {{year}} Moroccan Forum for Sustainable Development. All rights reserved.",
+        whoAreWe: "Who are we",
+        team: "Our team",
+        partners: "Partners",
+        press: "Press",
+        helpCenter: "Help Center",
+        faq: "FAQ",
+        contactUs: "Contact Us",
+        mentions: "Legal Mentions",
+        privacy: "Privacy Policy",
+        cgu: "Terms of Use"
       }
     }
   }

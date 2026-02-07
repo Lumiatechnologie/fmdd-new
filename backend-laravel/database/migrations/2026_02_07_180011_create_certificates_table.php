@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('certificates', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->uuid('formation_id');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
+            $table->timestamp('issue_date')->useCurrent();
+            $table->string('verify_url')->unique();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('certificates');
+    }
+};

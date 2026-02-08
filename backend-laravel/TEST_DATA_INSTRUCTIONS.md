@@ -1,6 +1,31 @@
-# Test Data Creation Guide
+## Configuration de la Base de Données (Backend)
 
-## Quick Start
+Si vous venez de cloner le projet, suivez ces étapes pour configurer la base de données :
+
+1.  **Créer la base de données** :
+    Créez une base de données MySQL nommée `fmdd_laravel` (ou le nom spécifié dans votre `.env`).
+
+2.  **Configurer le fichier .env** :
+    ```bash
+    cp .env.example .env
+    ```
+    Mettez à jour les informations de connexion (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
+
+3.  **Lancer les migrations et les données de test** :
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+    Cette commande va :
+    - Supprimer toutes les tables existantes.
+    - Recréer le schéma complet.
+    - Ajouter les événements (Job Day IFIAG), les utilisateurs de test (Admin/User), une formation et une offre d'emploi.
+
+## Comptes de Test par Défaut
+
+| Type | Email | Mot de passe | Rôle |
+|------|-------|--------------|------|
+| Admin | `admin@fmdd.com` | `admin123` | ADMIN |
+| User | `user@test.com` | `user123` | USER |
 
 I've created test data files for you. Here's the simplest way to add them:
 

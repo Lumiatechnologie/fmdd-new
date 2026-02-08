@@ -18,6 +18,8 @@ class EventSeeder extends Seeder
                 'date' => '2026-02-14',
                 'description' => 'Événement de recrutement annuel du Forum Marocain pour le Développement Durable.',
                 'image_path' => 'uploads/events/job_day_fmdd_2026.jpeg',
+                'time' => '09:00',
+                'location' => 'Casablanca',
             ]
         );
 
@@ -27,6 +29,8 @@ class EventSeeder extends Seeder
                 'date' => '2026-02-14',
                 'description' => "Le Job Day IFIAG est dédié aux étudiants et stagiaires IFIAG. Domaines : IT, RH, Gestion & Management, Marketing & Com, Finance & Compta. Horaire : À partir de 15h00.",
                 'image_path' => 'uploads/events/job_day_fmdd_2026.jpeg', // Utilise la même image comme demandé
+                'time' => '15:00',
+                'location' => 'IFIAG',
             ]
         );
     }

@@ -306,7 +306,7 @@ export function InscriptionDialog({ eventId, eventTitle, trigger }: InscriptionD
                     type="file" 
                     id="cv-upload" 
                     className="hidden" 
-                    accept=".pdf,image/*"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                     onChange={e => setFormData({...formData, cv: e.target.files?.[0] || null})}
                   />
                   <label htmlFor="cv-upload" className="cursor-pointer flex flex-col items-center gap-2">

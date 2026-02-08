@@ -26,7 +26,7 @@ class InscriptionController extends Controller
             'niveau_etudes' => 'required|string',
             'message' => 'nullable|string',
             'dossier_name' => 'required|string',
-            'cv' => 'required|file|mimes:pdf,doc,docx,txt|max:5120',
+            'cv' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5120',
             'event_id' => 'nullable|uuid|exists:events,id',
         ]);
 
@@ -66,14 +66,17 @@ class InscriptionController extends Controller
 
             DB::commit();
 
-            // Generate QR Codes in SVG format (doesn't require imagick)
-            $qrEntry = base64_encode(QrCode::format('svg')->size(300)->generate("https://fmdd.com/entry?token={$inscription->qr_entry_token}"));
-            $qrCv = base64_encode(QrCode::format('svg')->size(300)->generate("https://fmdd.com/cv?token={$inscription->qr_cv_token}"));
+            // Generate QR Codes via QRServer API (PNG) and fetch raw data for CID embedding
+            $qrEntryUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode("https://fmdd.com/entry?token={$inscription->qr_entry_token}");
+            $qrCvUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" . urlencode("https://fmdd.com/cv?token={$inscription->qr_cv_token}");
+            
+            $qrEntryData = @file_get_contents($qrEntryUrl);
+            $qrCvData = @file_get_contents($qrCvUrl);
 
             // Async Emails (Dispatch later if queues configured, or directly for now)
             try {
-                Mail::to('contact@fmdd.ma')->send(new InscriptionNotificationNaim($inscription));
-                Mail::to($inscription->email)->send(new InscriptionConfirmationCandidate($inscription, $qrEntry, $qrCv));
+                Mail::to('candidature@fmdd.ma')->send(new InscriptionNotificationNaim($inscription, $inscription->cv_path));
+                Mail::to($inscription->email)->send(new InscriptionConfirmationCandidate($inscription, $qrEntryData, $qrCvData));
             } catch (\Exception $e) {
                 // Log email failure but don't fail the request
                 \Log::error("Email failed for inscription {$inscription->id}: " . $e->getMessage());
@@ -84,8 +87,8 @@ class InscriptionController extends Controller
                 'message' => 'Inscription enregistrée',
                 'urls' => [
                     'cv' => asset($inscription->cv_path),
-                    'qr_entry' => "data:image/svg+xml;base64,{$qrEntry}",
-                    'qr_cv' => "data:image/svg+xml;base64,{$qrCv}",
+                    'qr_entry' => $qrEntryUrl,
+                    'qr_cv' => $qrCvUrl,
                 ]
             ], 201);
 

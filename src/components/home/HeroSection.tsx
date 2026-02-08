@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowRight, Play, Users, GraduationCap, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
@@ -81,14 +82,18 @@ export function HeroSection() {
 
             {/* CTAs */}
             <div className={`flex flex-col sm:flex-row items-center gap-4 justify-center ${isRTL ? "lg:justify-end" : "lg:justify-start"}`}>
-              <Button variant="accent" size="xl" className="w-full sm:w-auto group" aria-label={t('hero.cta1')}>
-                {t('hero.cta1')}
-                <ArrowRight className={`w-5 h-5 transition-transform ${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
-              </Button>
-              <Button variant="hero-outline" size="xl" className="w-full sm:w-auto group" aria-label={t('hero.cta2')}>
-                <Play className="w-5 h-5" aria-hidden="true" />
-                {t('hero.cta2')}
-              </Button>
+              <Link to="/register" className="w-full sm:w-auto">
+                <Button variant="accent" size="xl" className="w-full group" aria-label={t('hero.cta1')}>
+                  {t('hero.cta1')}
+                  <ArrowRight className={`w-5 h-5 transition-transform ${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
+                </Button>
+              </Link>
+              <Link to="/about" className="w-full sm:w-auto">
+                <Button variant="hero-outline" size="xl" className="w-full group" aria-label={t('hero.cta2')}>
+                  <Play className="w-5 h-5" aria-hidden="true" />
+                  {t('hero.cta2')}
+                </Button>
+              </Link>
             </div>
 
             {/* Stats */}

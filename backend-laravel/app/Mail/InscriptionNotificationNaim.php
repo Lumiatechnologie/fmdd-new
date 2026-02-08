@@ -17,10 +17,12 @@ class InscriptionNotificationNaim extends Mailable
      * Create a new message instance.
      */
     public $inscription;
+    public $cvPath;
 
-    public function __construct($inscription)
+    public function __construct($inscription, $cvPath = null)
     {
         $this->inscription = $inscription;
+        $this->cvPath = $cvPath;
     }
 
     public function envelope(): Envelope
@@ -44,6 +46,13 @@ class InscriptionNotificationNaim extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        if ($this->cvPath && file_exists(public_path($this->cvPath))) {
+            $attachments[] = \Illuminate\Mail\Mailables\Attachment::fromPath(public_path($this->cvPath))
+                ->as('CV_Candidat.' . pathinfo($this->cvPath, PATHINFO_EXTENSION));
+        }
+
+        return $attachments;
     }
 }

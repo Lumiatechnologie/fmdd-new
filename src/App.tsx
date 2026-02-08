@@ -11,6 +11,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import GalleryPage from "./pages/GalleryPage";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import EventsPage from "./pages/EventsPage";
+import EventDetailPage from "./pages/EventDetailPage";
 import BlogPage from "./pages/BlogPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/galerie" element={<GalleryPage />} />
           <Route path="/temoignages" element={<TestimonialsPage />} />
           <Route path="/evenements" element={<EventsPage />} />
+          <Route path="/evenements/:id" element={<EventDetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

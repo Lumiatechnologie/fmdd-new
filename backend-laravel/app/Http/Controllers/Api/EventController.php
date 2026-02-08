@@ -10,14 +10,14 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::orderBy('date', 'desc')->get();
+        $events = Event::withCount('inscriptions')->orderBy('date', 'desc')->get();
         
         return response()->json($events);
     }
 
     public function show($id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::withCount('inscriptions')->findOrFail($id);
         
         return response()->json($event);
     }

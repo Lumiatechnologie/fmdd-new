@@ -32,6 +32,7 @@ Route::get('/incubation/programs/{id}', [App\Http\Controllers\Api\IncubationCont
 // Inscription Flow
 Route::post('/inscriptions', [App\Http\Controllers\Api\InscriptionController::class, 'store']);
 Route::get('/events', [App\Http\Controllers\Api\EventController::class, 'index']);
+Route::get('/events/{id}', [App\Http\Controllers\Api\EventController::class, 'show']);
 
 // Protected auth routes
 Route::middleware('auth:sanctum')->group(function () {

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function CTASection() {
@@ -45,13 +46,17 @@ export function CTASection() {
             </p>
 
             <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRTL ? "rtl" : "ltr"}`}>
-              <Button variant="accent" size="xl" className="w-full sm:w-auto group">
-                {t('home.cta.button1')}
-                <ArrowRight className={`w-5 h-5 transition-transform ${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
-              </Button>
-              <Button variant="hero-outline" size="xl" className="w-full sm:w-auto">
-                {t('home.cta.button2')}
-              </Button>
+              <Link to="/register" className="w-full sm:w-auto">
+                <Button variant="accent" size="xl" className="w-full group">
+                  {t('home.cta.button1')}
+                  <ArrowRight className={`w-5 h-5 transition-transform ${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
+                </Button>
+              </Link>
+              <Link to="/about" className="w-full sm:w-auto">
+                <Button variant="hero-outline" size="xl" className="w-full">
+                  {t('home.cta.button2')}
+                </Button>
+              </Link>
             </div>
 
             <p className="text-sm text-primary-foreground/60 mt-6">

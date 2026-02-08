@@ -14,6 +14,8 @@ class Event extends Model
         'date',
         'description',
         'image_path',
+        'time',
+        'location',
     ];
 
     public function inscriptions()

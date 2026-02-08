@@ -17,14 +17,14 @@ class InscriptionConfirmationCandidate extends Mailable
      * Create a new message instance.
      */
     public $inscription;
-    public $qrEntry;
-    public $qrCv;
+    public $qrEntryData;
+    public $qrCvData;
 
-    public function __construct($inscription, $qrEntry, $qrCv)
+    public function __construct($inscription, $qrEntryData, $qrCvData)
     {
         $this->inscription = $inscription;
-        $this->qrEntry = $qrEntry;
-        $this->qrCv = $qrCv;
+        $this->qrEntryData = $qrEntryData;
+        $this->qrCvData = $qrCvData;
     }
 
     public function envelope(): Envelope

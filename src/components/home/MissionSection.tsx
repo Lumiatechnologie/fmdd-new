@@ -11,9 +11,9 @@ export function MissionSection() {
     { id: "formation", icon: GraduationCap, title: t('home.mission.pillars.formation'), color: "bg-emerald-500", light: "bg-emerald-50", text: "text-emerald-600", image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=400&fit=crop" },
     { id: "accompagnement", icon: Users, title: t('home.mission.pillars.accompagnement'), color: "bg-amber-500", light: "bg-amber-50", text: "text-amber-600", image: "https://images.unsplash.com/photo-1521791136364-798a7bc0d262?w=400&h=400&fit=crop" },
     { id: "financement", icon: Banknote, title: t('home.mission.pillars.financement'), color: "bg-indigo-500", light: "bg-indigo-50", text: "text-indigo-600", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=400&h=400&fit=crop" },
-    { id: "workshop", icon: Hammer, title: t('home.mission.pillars.workshop'), color: "bg-rose-500", light: "bg-rose-50", text: "text-rose-600", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=400&fit=crop" },
-    { id: "coaching", icon: MessageSquare, title: t('home.mission.pillars.coaching'), color: "bg-violet-500", light: "bg-violet-50", text: "text-violet-600", image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=400&fit=crop" },
-    { id: "durability", icon: Leaf, title: t('home.mission.pillars.durability'), color: "bg-green-600", light: "bg-green-50", text: "text-green-700", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?w=400&h=400&fit=crop" },
+    { id: "workshop", icon: Hammer, title: t('home.mission.pillars.workshop'), color: "bg-rose-500", light: "bg-rose-50", text: "text-rose-600", image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800" },
+    { id: "coaching", icon: MessageSquare, title: t('home.mission.pillars.coaching'), color: "bg-violet-500", light: "bg-violet-50", text: "text-violet-600", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800" },
+    { id: "durability", icon: Leaf, title: t('home.mission.pillars.durability'), color: "bg-green-600", light: "bg-green-50", text: "text-green-700", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800" },
   ];
 
   const containerVariants = {

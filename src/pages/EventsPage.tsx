@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import api from "@/lib/api";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -59,11 +60,11 @@ const EventsPage = () => {
 
     const EventCard = ({ event, isPast = false }: { event: any, isPast?: boolean }) => (
       <Card className={`overflow-hidden hover:shadow-lg transition-all duration-300 ${isPast ? 'opacity-75' : ''}`}>
-        <div className="relative h-48 overflow-hidden">
+        <Link to={`/evenements/${event.id}`} className="relative h-48 overflow-hidden block">
            <img
              src={event.image_path ? (event.image_path.startsWith('http') ? event.image_path : `http://localhost:8000/${event.image_path}`) : "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"}
              alt={event.title}
-             className="w-full h-full object-cover"
+             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
            />
           <div className={`absolute top-4 ${i18n.language === 'ar' ? 'right-4' : 'left-4'} flex gap-2`}>
              <Badge variant="secondary" className="bg-primary text-primary-foreground">
@@ -82,11 +83,13 @@ const EventsPage = () => {
               </Badge>
             </div>
           )}
-        </div>
+        </Link>
         <CardContent className="p-6">
-          <h3 className={`font-display text-lg font-bold text-foreground mb-2 line-clamp-2 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
-            {event.title}
-          </h3>
+          <Link to={`/evenements/${event.id}`}>
+            <h3 className={`font-display text-lg font-bold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
+              {event.title}
+            </h3>
+          </Link>
           <p className={`text-sm text-muted-foreground mb-4 line-clamp-2 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
             {event.description}
           </p>
@@ -106,7 +109,7 @@ const EventsPage = () => {
             </div>
              <div className={`flex items-center gap-2 text-sm text-muted-foreground ${i18n.language === 'ar' ? 'flex-row-reverse' : ''}`}>
                 <Users className="w-4 h-4 text-primary" />
-                <span>{ (event.attendees || 0).toLocaleString()} {t('pages.events.attendees')}</span>
+                 <span>{ (event.inscriptions_count || 0).toLocaleString()} {t('pages.events.attendees')}</span>
              </div>
           </div>
 

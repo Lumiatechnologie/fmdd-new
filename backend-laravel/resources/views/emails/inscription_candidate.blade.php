@@ -1,36 +1,67 @@
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-    <p>Bonjour {{ $inscription->prenom }},</p>
-
-    <p style="font-size: 1.1em; font-weight: bold; color: #10b981;">✅ Votre inscription est confirmée avec succès !</p>
-
-    <div style="margin-top: 25px;">
-        <p style="font-weight: bold; margin-bottom: 10px;">🚪 QR Code pour accéder à l’événement</p>
-        <div style="border: 1px solid #e5e7eb; padding: 15px; display: inline-block; border-radius: 8px; background-color: #f9fafb;">
-            <img src="data:image/svg+xml;base64,{{ $qrEntry }}" width="200" height="200" style="display: block;" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #ffffff; background-color: #0b0d0f; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 20px auto; background-color: #121417; border-radius: 12px; overflow: hidden; border: 1px solid #2d333b;">
+        
+        <!-- Header Section -->
+        <div style="padding: 30px; text-align: left;">
+            <p style="font-size: 1.1em; color: #e1e4e8; margin-top: 0;">Bonjour {{ $inscription->prenom }} {{ $inscription->nom }},</p>
+            <h2 style="color: #ffffff; font-size: 1.4em; margin: 20px 0;">✅ Votre inscription est confirmée avec succès !</h2>
         </div>
-        <p style="font-size: 0.8em; color: #6b7280; margin-top: 5px;">(QR Code Accès)</p>
-    </div>
 
-    <div style="margin-top: 25px;">
-        <p style="font-weight: bold; margin-bottom: 10px;">📲 Votre CV – QR Code personnalisé</p>
-        <div style="border: 1px solid #e5e7eb; padding: 15px; display: inline-block; border-radius: 8px; background-color: #f9fafb;">
-            <img src="data:image/svg+xml;base64,{{ $qrCv }}" width="200" height="200" style="display: block;" />
+        <!-- QR Code Section 1 -->
+        <div style="padding: 0 30px 30px 30px;">
+            <p style="font-weight: bold; font-size: 1.1em; margin-bottom: 20px;">
+                🚪 QR Code pour accéder à l'événement
+            </p>
+            <div style="background-color: #ffffff; padding: 20px; display: inline-block; border-radius: 12px; margin-bottom: 10px;">
+                <img src="{{ $message->embedData($qrEntryData, 'qr_entry.png') }}" width="250" height="250" style="display: block; border-radius: 4px;" />
+            </div>
+            <p style="color: #8b949e; font-size: 0.9em; margin-top: 5px;">(QR Code Accès)</p>
         </div>
-        <p style="font-size: 0.8em; color: #6b7280; margin-top: 5px;">(QR Code CV)</p>
+
+        <!-- QR Code Section 2 -->
+        <div style="padding: 0 30px 30px 30px;">
+            <p style="font-weight: bold; font-size: 1.1em; margin-bottom: 20px;">
+                📲 Votre CV – QR Code personnalisé
+            </p>
+            <div style="background-color: #ffffff; padding: 20px; display: inline-block; border-radius: 12px; margin-bottom: 10px;">
+                <img src="{{ $message->embedData($qrCvData, 'qr_cv.png') }}" width="250" height="250" style="display: block; border-radius: 4px;" />
+            </div>
+            <p style="color: #8b949e; font-size: 0.9em; margin-top: 5px;">(QR Code CV)</p>
+        </div>
+
+        <!-- Info Section -->
+        <div style="padding: 30px; background-color: #1c2128; border-top: 1px solid #2d333b;">
+            <p style="font-weight: bold; font-size: 1.2em; margin-top: 0; color: #58a6ff;">🚀 Prochaine étape</p>
+            
+            <div style="margin-top: 20px;">
+                <p style="margin: 10px 0; font-size: 1.1em;">
+                    📅 <strong>Date :</strong> samedi 14 février 2026
+                </p>
+                <p style="margin: 10px 0; font-size: 1.1em;">
+                    📍 <strong>Lieu :</strong> IFIAG Casablanca
+                </p>
+                <p style="margin: 10px 0; font-size: 1.1em;">
+                    📍 <strong>Heure :</strong> Merci de vous présenter le jour de l’événement à 15h00.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 30px; border-top: 1px solid #2d333b; background-color: #121417;">
+            <p style="margin: 0; font-size: 1.1em;">
+                Cordialement,<br>
+                <strong style="color: #ffffff;">L'équipe FMDD Job Day.</strong>
+            </p>
+            <p style="font-size: 0.8em; color: #484f58; margin-top: 30px; text-align: center;">
+                ID inscription: {{ $inscription->id }}
+            </p>
+        </div>
     </div>
-
-    <div style="margin-top: 30px; padding: 20px; background-color: #eff6ff; border-radius: 8px; border: 1px solid #bfdbfe;">
-        <p style="font-weight: bold; margin-top: 0; color: #1e40af; font-size: 1.1em;">🚀 Prochaine étape</p>
-        <p style="margin: 5px 0;"><strong>📅 Date :</strong> samedi 14 février 2026</p>
-        <p style="margin: 5px 0;"><strong>📍 Lieu :</strong> IFIAG Casablanca</p>
-        <p style="margin: 5px 0;"><strong>⏰ Heure :</strong> Merci de vous présenter le jour de l’événement à 15h00.</p>
-    </div>
-
-    <p style="margin-top: 30px;">Cordialement,<br>
-    <strong>L’équipe FMDD Job Day.</strong></p>
-
-    <p style="font-size: 0.7em; color: #9ca3af; margin-top: 40px; border-top: 1px solid #f3f4f6; pt-10;">ID inscription: {{ $inscription->id }}</p>
 </body>
 </html>

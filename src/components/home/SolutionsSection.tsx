@@ -24,7 +24,7 @@ export function SolutionsSection() {
     {
       id: "insertion",
       icon: Briefcase,
-      title: "Insertion Pro",
+      title: "FMDD JOB",
       subtitle: t('home.solutions.insertion.subtitle'),
       description: t('home.solutions.insertion.description'),
       features: t('home.solutions.insertion.features', { returnObjects: true }) as string[],
@@ -36,7 +36,7 @@ export function SolutionsSection() {
     {
       id: "projets",
       icon: Rocket,
-      title: t('nav.entrepreneurship'),
+      title: "FMDD Entrepreneuriat",
       subtitle: t('home.solutions.entrepreneurship.subtitle'),
       description: t('home.solutions.entrepreneurship.description'),
       features: t('home.solutions.entrepreneurship.features', { returnObjects: true }) as string[],
